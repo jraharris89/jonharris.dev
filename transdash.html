@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>TransDASH Project — Jonathon Harris</title>
+    <meta
+      name="description"
+      content="Interactive Tableau visualization platform analyzing performance metrics for U.S. transit agencies."
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="images/isolated_logo(circle).png"
+      sizes="32x32"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="images/isolated_logo(circle).png"
+      sizes="192x192"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --text-primary: #1a1a1a;
+        --text-secondary: #666666;
+        --text-light: #999999;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f9fa;
+        --bg-tertiary: #f0f2f5;
+        --accent: #4a5568;
+        --accent-hover: #2d3748;
+        --accent-light: #667eea;
+        --border: #e2e8f0;
+        --shadow: rgba(0, 0, 0, 0.08);
+        --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-main);
+        color: var(--text-primary);
+        background: var(--bg-secondary);
+        line-height: 1.6;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 2px 10px var(--shadow);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        width: 60px;
+        height: auto;
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      .back-button {
+        color: var(--accent);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+
+      .back-button:hover {
+        background: var(--bg-secondary);
+        color: var(--accent-hover);
+        gap: 0.75rem;
+      }
+
+      /* Project Header */
+      .project-header {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 100px 2rem 1rem;
+      }
+
+      .header-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px var(--shadow);
+      }
+
+      .project-title {
+        font-size: clamp(1.5rem, 3.5vw, 2rem);
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .project-subtitle {
+        font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .project-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      .meta-icon {
+        width: 20px;
+        height: 20px;
+        color: var(--accent-light);
+      }
+
+      .tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .tech-tag {
+        padding: 0.4rem 1rem;
+        background: var(--bg-tertiary);
+        border-radius: 20px;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      /* Dashboard Container */
+      .dashboard-section {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem 2rem;
+      }
+
+      .dashboard-wrapper {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px var(--shadow);
+        height: calc(100vh - 200px);
+        min-height: 800px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .dashboard-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+
+      .dashboard-label {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+      }
+
+      .fullscreen-hint {
+        color: var(--text-light);
+        font-size: 0.875rem;
+      }
+
+      .tableau-embed {
+        width: 100%;
+        flex: 1;
+        min-height: 700px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--bg-tertiary);
+      }
+
+      /* Project Details Section */
+      .project-details {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .detail-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px var(--shadow);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .detail-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px var(--shadow);
+      }
+
+      .detail-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+
+      .detail-card p {
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      .detail-card ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .detail-card li {
+        padding: 0.5rem 0;
+        color: var(--text-secondary);
+        position: relative;
+        padding-left: 1.5rem;
+      }
+
+      .detail-card li:before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent-light);
+        font-weight: bold;
+      }
+
+      /* Footer */
+      footer {
+        max-width: 1400px;
+        margin: 4rem auto 0;
+        padding: 2rem;
+        text-align: center;
+        color: var(--text-light);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .project-header {
+          padding: 80px 1rem 1rem;
+        }
+
+        .header-content {
+          padding: 1.5rem;
+        }
+
+        .dashboard-section {
+          padding: 0 1rem 1rem;
+        }
+
+        .dashboard-wrapper {
+          padding: 1rem;
+          height: calc(100vh - 240px);
+          min-height: 500px;
+        }
+
+        .tableau-embed {
+          min-height: 400px;
+        }
+
+        .project-meta {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .dashboard-info {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+
+        .details-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Loading Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header-content,
+      .dashboard-wrapper,
+      .detail-card {
+        animation: fadeIn 0.6s ease forwards;
+      }
+
+      .dashboard-wrapper {
+        animation-delay: 0.2s;
+      }
+
+      .detail-card:nth-child(1) {
+        animation-delay: 0.3s;
+      }
+
+      .detail-card:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+
+      .detail-card:nth-child(3) {
+        animation-delay: 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="index.html" class="back-button">
+          <span>←</span>
+          <span>Back to Portfolio</span>
+        </a>
+        <img class="logo" src="images/isolated_logo(circle).png" alt="Logo" />
+      </div>
+    </nav>
+
+    <header class="project-header">
+      <div class="header-content">
+        <h1 class="project-title">TransDASH National Performance Dashboard</h1>
+        <p class="project-subtitle">
+          Interactive Tableau visualization platform analyzing performance
+          metrics for U.S. transit agencies with real-time data updates, custom
+          KPI tracking, and comparative analysis across 10+ agencies.
+        </p>
+
+        <div class="project-meta">
+          <div class="meta-item">
+            <svg
+              class="meta-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+            <span>2024 - Present</span>
+          </div>
+          <div class="meta-item">
+            <svg
+              class="meta-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
+            <span>Transit Performance Analytics</span>
+          </div>
+          <div class="meta-item">
+            <svg
+              class="meta-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <span>10+ Transit Agencies</span>
+          </div>
+        </div>
+
+        <div class="tech-tags">
+          <span class="tech-tag">Tableau</span>
+          <span class="tech-tag">SQL</span>
+          <span class="tech-tag">ETL Pipelines</span>
+          <span class="tech-tag">API Integration</span>
+          <span class="tech-tag">Data Visualization</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-section">
+      <div class="dashboard-wrapper">
+        <div class="dashboard-info">
+          <h2 class="dashboard-label">Live Interactive Dashboard</h2>
+          <p class="fullscreen-hint">
+            💡 Click the fullscreen icon in the dashboard for best viewing
+          </p>
+        </div>
+        <div class="tableau-embed">
+          <div
+            class="tableauPlaceholder"
+            id="viz1761007773953"
+            style="position: relative; width: 100%; height: 100%"
+          >
+            <noscript
+              ><a href="#"
+                ><img
+                  alt="Overview "
+                  src="https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Tr&#47;TransDASH_Agency_LTD_REDESIGN&#47;Overview&#47;1_rss.png"
+                  style="border: none" /></a></noscript
+            ><object class="tableauViz" style="display: none">
+              <param
+                name="host_url"
+                value="https%3A%2F%2Fpublic.tableau.com%2F"
+              />
+              <param name="embed_code_version" value="3" />
+              <param name="site_root" value="" />
+              <param
+                name="name"
+                value="TransDASH_Agency_LTD_REDESIGN&#47;Overview"
+              />
+              <param name="tabs" value="no" />
+              <param name="toolbar" value="yes" />
+              <param
+                name="static_image"
+                value="https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Tr&#47;TransDASH_Agency_LTD_REDESIGN&#47;Overview&#47;1.png"
+              />
+              <param name="animate_transition" value="yes" />
+              <param name="display_static_image" value="yes" />
+              <param name="display_spinner" value="yes" />
+              <param name="display_overlay" value="yes" />
+              <param name="display_count" value="yes" />
+              <param name="language" value="en-US" />
+            </object>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <section class="project-details">
+      <div class="details-grid">
+        <div class="detail-card">
+          <h3>📊 Project Overview</h3>
+          <p>
+            TransDASH is a comprehensive performance monitoring platform that
+            provides real-time insights into key operational metrics across the
+            nation's transit systems. The dashboard enables agencies to
+            benchmark performance, identify trends, and make data-driven
+            decisions.
+          </p>
+        </div>
+
+        <div class="detail-card">
+          <h3>🎯 Key Features</h3>
+          <ul>
+            <li>Real-time performance tracking</li>
+            <li>Comparative agency analysis</li>
+            <li>Custom KPI monitoring</li>
+            <li>Automated data refresh</li>
+            <li>Interactive filtering & drill-down</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <h3>💡 Impact & Results</h3>
+          <p>
+            Reduced reporting time by 60%, enabled proactive decision-making
+            through early trend identification, and provided stakeholders with
+            instant access to critical performance data. Used by transit
+            agencies nationwide for strategic planning and operational
+            improvements.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 Jonathon Harris. All rights reserved.</p>
+    </footer>
+
+    <script type="text/javascript">
+      var divElement = document.getElementById("viz1761007773953");
+      var vizElement = divElement.getElementsByTagName("object")[0];
+      vizElement.style.width = "99%";
+      vizElement.style.height = "99%";
+      var scriptElement = document.createElement("script");
+      scriptElement.src =
+        "https://public.tableau.com/javascripts/api/viz_v1.js";
+      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    </script>
+  </body>
+</html>

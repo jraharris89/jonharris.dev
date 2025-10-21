@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>Jonathon Harris — Data Analyst & Developer | Portland, OR</title>
+    <meta
+      name="description"
+      content="Portland-based data analyst and developer specializing in dashboards, data automation, and analytics tools. Expert in SQL, Python, Tableau, and Power BI."
+    />
+    <meta
+      name="keywords"
+      content="data analyst, developer, Portland, dashboard, Tableau, Python, SQL, data visualization"
+    />
+    <meta name="author" content="Jonathon Harris" />
+
+    <meta
+      property="og:title"
+      content="Jonathon Harris — Data Analyst & Developer"
+    />
+    <meta
+      property="og:description"
+      content="I build dashboards, automate data workflows, and design tools that help teams make smarter decisions."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jonathonharris.com" />
+    <meta property="og:image" content="/images/og-preview.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Jonathon Harris — Data Analyst & Developer"
+    />
+    <meta
+      name="twitter:description"
+      content="I build dashboards, automate data workflows, and design tools that help teams make smarter decisions."
+    />
+    <meta name="twitter:image" content="/images/og-preview.jpg" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>📊</text></svg>"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* === CSS Reset & Base Styles === */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        /* Color Palette - Muted & Professional */
+        --text-primary: #1a1a1a;
+        --text-secondary: #666666;
+        --text-light: #999999;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f9fa;
+        --bg-tertiary: #f0f2f5;
+        --accent: #4a5568;
+        --accent-hover: #2d3748;
+        --border: #e2e8f0;
+        --shadow: rgba(0, 0, 0, 0.08);
+
+        /* Typography */
+        --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        --font-size-base: 16px;
+        --line-height: 1.6;
+
+        /* Spacing */
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 2rem;
+        --spacing-lg: 3rem;
+        --spacing-xl: 5rem;
+
+        /* Animation */
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font-main);
+        font-size: var(--font-size-base);
+        line-height: var(--line-height);
+        color: var(--text-primary);
+        background: var(--bg-primary);
+        overflow-x: hidden;
+      }
+
+      /* === Typography === */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+      }
+
+      h2 {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        margin-bottom: var(--spacing-md);
+      }
+
+      h3 {
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+      }
+
+      p {
+        color: var(--text-secondary);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      a:hover {
+        color: var(--accent-hover);
+      }
+
+      /* === Container & Layout === */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-md);
+      }
+
+      section {
+        padding: var(--spacing-xl) 0;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease forwards;
+      }
+
+      /* === Navigation === */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        padding: var(--spacing-sm) 0;
+        border-bottom: 1px solid var(--border);
+        transition: var(--transition);
+      }
+
+      nav.scrolled {
+        box-shadow: 0 2px 20px var(--shadow);
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-md);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        width: 90px;
+        max-width: 8vw;
+        height: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: var(--spacing-md);
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        font-weight: 500;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: 4px;
+        transition: var(--transition);
+      }
+
+      .nav-links a:hover {
+        color: var(--text-primary);
+        background: var(--bg-secondary);
+      }
+
+      /* Mobile Menu Toggle */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: var(--spacing-xs);
+      }
+
+      .menu-toggle span {
+        width: 24px;
+        height: 2px;
+        background: var(--text-primary);
+        transition: var(--transition);
+      }
+
+      /* === Hero Section === */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding-top: 80px;
+      }
+
+      .hero-content {
+        text-align: center;
+        max-width: 800px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-tag {
+        display: inline-block;
+        padding: 8px 16px;
+        background: var(--bg-secondary);
+        border-radius: 20px;
+        color: var(--text-secondary);
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: var(--spacing-md);
+        opacity: 0;
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .hero h1 {
+        margin-bottom: var(--spacing-md);
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+        animation-delay: 0.2s;
+        color: var(--text-primary);
+        font-family: var(--font-main);
+      }
+
+      /* === NEW SLOT MACHINE EFFECT STYLES === */
+      .slot-machine {
+        /* This is the H1 */
+        display: flex; /* Use flex to handle spaces correctly */
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .slot-char {
+        display: inline-block;
+        position: relative;
+        height: 1.2em; /* The "viewport" */
+        line-height: 1.2em;
+        overflow: hidden;
+        vertical-align: bottom;
+        min-width: 0.3em;
+        /* Add motion blur-like effect */
+        filter: blur(0);
+        transition: filter 0.3s ease-out;
+      }
+
+      .slot-machine.animate .slot-char {
+        filter: blur(1px); /* Add blur during animation */
+      }
+      .slot-machine.settled .slot-char {
+        filter: blur(0); /* Remove blur when settled */
+      }
+
+      .slot-space {
+        display: inline-block;
+        width: 0.3em; /* Space width */
+      }
+
+      .slot-char-final {
+        /* This is invisible, just sets the width of the container */
+        visibility: hidden;
+      }
+
+      .slot-reel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+
+        /* Start at the top of the reel */
+        transform: translateY(0);
+
+        /* This is the magic! 
+          We use a transition for the transform.
+          The cubic-bezier creates a "back-and-forth" elastic bounce.
+        */
+        transition-property: transform;
+        transition-duration: 1.5s;
+        transition-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+      }
+
+      .slot-reel.animate {
+        /* The JS will set this custom property to the final position */
+        transform: translateY(var(--final-transform));
+      }
+
+      .slot-reel > span {
+        height: 1.2em;
+        line-height: 1.2em;
+      }
+      /* === END NEW STYLES === */
+
+      .hero .subtitle {
+        font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+        color: var(--text-secondary);
+        margin-bottom: var(--spacing-lg);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+        animation-delay: 0.4s;
+      }
+
+      .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+        animation-delay: 0.5s;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: var(--spacing-sm);
+        justify-content: center;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+        animation-delay: 0.6s;
+      }
+
+      .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .hero-pattern {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(var(--border) 1px, transparent 1px);
+        background-size: 50px 50px;
+        opacity: 0.2;
+      }
+
+      @media (max-width: 768px) {
+        .hero-stats {
+          flex-direction: column;
+          gap: var(--spacing-md);
+        }
+
+        .stat-item {
+          padding: var(--spacing-sm);
+          background: var(--bg-secondary);
+          border-radius: 8px;
+        }
+      }
+
+      /* === Buttons === */
+      .btn {
+        display: inline-block;
+        padding: 14px 32px;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: var(--transition);
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .btn-secondary:hover {
+        background: var(--accent);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      /* === SCROLL ANIMATION SECTION === */
+      #from-to {
+        position: relative;
+        height: 400vh;
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
+
+      .stage {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: var(--bg-primary);
+        display: grid;
+        place-items: center;
+      }
+
+      .layer {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        max-width: min(88vw, 1400px);
+        width: 100%;
+        height: auto;
+        will-change: opacity, transform, filter;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      #sketches {
+        max-width: min(60vw, 1000px);
+        width: 100%;
+        height: auto;
+      }
+
+      #dashboards {
+        max-width: min(50vw, 800px);
+        width: 100%;
+        height: auto;
+      }
+
+      .bigword {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        letter-spacing: 0.02em;
+        font-weight: 800;
+        color: var(--text-primary);
+        font-size: clamp(40px, 14vw, 140px);
+        opacity: 0;
+        will-change: opacity, transform;
+        z-index: 10;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.15),
+          0 8px 40px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* === Projects Section === */
+      .projects {
+        background: var(--bg-secondary);
+        animation-delay: 0.2s;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+      }
+
+      .project-card {
+        background: var(--bg-primary);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: var(--transition);
+        border: 1px solid var(--border);
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+      }
+
+      .project-card:nth-child(1) {
+        animation-delay: 0.3s;
+      }
+      .project-card:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .project-card:nth-child(3) {
+        animation-delay: 0.5s;
+      }
+
+      .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px var(--shadow);
+      }
+
+      .project-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+      }
+
+      .project-content {
+        padding: var(--spacing-md);
+      }
+
+      .project-title {
+        font-size: 1.25rem;
+        margin-bottom: var(--spacing-xs);
+        color: var(--text-primary);
+      }
+
+      .project-description {
+        color: var(--text-secondary);
+        margin-bottom: var(--spacing-sm);
+        line-height: 1.6;
+      }
+
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+        margin-top: var(--spacing-sm);
+      }
+
+      .tech-tag {
+        padding: 4px 12px;
+        background: var(--bg-tertiary);
+        border-radius: 20px;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
+      .project-link {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        margin-top: var(--spacing-sm);
+        font-weight: 500;
+        color: var(--accent);
+      }
+
+      .project-link:hover {
+        gap: var(--spacing-sm);
+      }
+
+      /* === About Section === */
+      .about {
+        animation-delay: 0.4s;
+      }
+
+      .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .about-text {
+        font-size: 1.125rem;
+        line-height: 1.8;
+        margin-bottom: var(--spacing-md);
+      }
+
+      .skills-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+        justify-content: center;
+        margin-top: var(--spacing-md);
+      }
+
+      .skill-badge {
+        padding: 8px 16px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .skill-badge:hover {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      /* === Contact Section === */
+      .contact {
+        background: var(--bg-secondary);
+        animation-delay: 0.6s;
+      }
+
+      .contact-content {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .contact-buttons {
+        display: flex;
+        gap: var(--spacing-sm);
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: var(--spacing-md);
+      }
+
+      .social-links {
+        display: flex;
+        gap: var(--spacing-md);
+        justify-content: center;
+        margin-top: var(--spacing-lg);
+      }
+
+      .social-link {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        transition: var(--transition);
+        font-size: 1.25rem;
+      }
+
+      .social-link:hover {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      /* === Footer === */
+      footer {
+        background: var(--text-primary);
+        color: var(--text-light);
+        padding: var(--spacing-md) 0;
+        text-align: center;
+      }
+
+      /* === Animations === */
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* === Responsive Design === */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+          position: fixed;
+          top: 60px;
+          left: 0;
+          right: 0;
+          background: white;
+          flex-direction: column;
+          padding: var(--spacing-md);
+          box-shadow: 0 10px 30px var(--shadow);
+          border-top: 1px solid var(--border);
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          min-height: 100vh;
+          padding-top: 100px;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        :root {
+          --font-size-base: 14px;
+        }
+
+        section {
+          padding: var(--spacing-lg) 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #from-to {
+          height: auto;
+        }
+        .stage {
+          position: relative;
+          height: auto;
+        }
+        .layer,
+        .bigword {
+          position: relative;
+          left: auto;
+          top: auto;
+          transform: none;
+          opacity: 1;
+        }
+        #sketches {
+          display: none;
+        }
+        #from {
+          display: none;
+        }
+        /* Disable slot machine animation if user prefers reduced motion */
+        .slot-reel {
+          transition: none;
+          transform: var(--final-transform);
+        }
+      }
+
+      /* === Loading State === */
+      .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .loading.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading" id="loading">
+      <div class="loader">Loading...</div>
+    </div>
+
+    <nav id="navbar">
+      <div class="nav-container">
+        <img
+          class="logo"
+          src="images/isolated_logo(circle).png"
+          alt="Hex Logo"
+        />
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="slot-machine">Data Analyst & Developer</h1>
+          <p class="subtitle">
+            I build dashboards, automate data workflows, and design tools that
+            help teams make smarter decisions.
+          </p>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number" data-target="3" data-suffix="+">0</div>
+              <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" data-target="15" data-suffix="+">0</div>
+              <div class="stat-label">Dashboards Built</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" data-target="20" data-suffix="+">0</div>
+              <div class="stat-label">Agencies Served</div>
+            </div>
+          </div>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            <a href="#contact" class="btn btn-secondary">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-bg">
+        <div class="hero-pattern"></div>
+      </div>
+    </section>
+
+    <section id="from-to" aria-label="From Data to Vision animation">
+      <div
+        class="stage"
+        role="img"
+        aria-label="Sketches transforming into dashboards"
+      >
+        <img
+          id="sketches"
+          class="layer"
+          src="/images/Raw_Data_apps.png"
+          alt="Product sketches and wireframes"
+        />
+        <img
+          id="dashboards"
+          class="layer"
+          src="/images/ToVision(transparent).png"
+          alt="Polished dashboards and UI panels"
+        />
+        <div id="from" class="bigword">RAW DATA</div>
+        <div id="to" class="bigword">CLEAR INSIGHTS</div>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <div class="container">
+        <h2>Featured Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-image">📊</div>
+            <div class="project-content">
+              <h3 class="project-title">
+                TransDASH National Performance Dashboard
+              </h3>
+              <p class="project-description">
+                Interactive Tableau visualization platform analyzing performance
+                metrics for U.S. transit agencies. Features real-time data
+                updates, custom KPI tracking, and comparative analysis across
+                10+ agencies.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Tableau</span>
+                <span class="tech-tag">SQL</span>
+                <span class="tech-tag">ETL</span>
+                <span class="tech-tag">API Integration</span>
+              </div>
+              <a href="#" class="project-link"> View Project → </a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">⚙️</div>
+            <div class="project-content">
+              <h3 class="project-title">Agency Measures Tracker</h3>
+              <p class="project-description">
+                Automated reporting system built with Google Apps Script that
+                syncs CSV data, processes metrics, and generates weekly
+                performance reports. Reduced manual reporting time by 75%.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Google Apps Script</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">CSV Processing</span>
+                <span class="tech-tag">Automation</span>
+              </div>
+              <a href="#" class="project-link"> View Project → </a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">📈</div>
+            <div class="project-content">
+              <h3 class="project-title">Peer Analysis Project</h3>
+              <p class="project-description">
+                Python-powered benchmarking analysis comparing performance
+                metrics across multiple transit agencies. Includes statistical
+                modeling, trend analysis, and interactive Tableau dashboards for
+                stakeholder presentations.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">Tableau</span>
+                <span class="tech-tag">Statistical Analysis</span>
+              </div>
+              <a href="#" class="project-link"> View Project → </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-content">
+          <h2>About Me</h2>
+          <p class="about-text">
+            I'm a Portland-based data analyst with 3 years of experience
+            building performance dashboards, automating workflows, and analyzing
+            transit metrics. My work focuses on transforming complex datasets
+            into actionable insights that drive organizational decision-making.
+          </p>
+          <p class="about-text">
+            With expertise spanning data engineering, visualization, and
+            statistical analysis, I specialize in creating end-to-end solutions
+            that bridge the gap between raw data and strategic action.
+          </p>
+          <div class="skills-container">
+            <span class="skill-badge">SQL</span>
+            <span class="skill-badge">Python</span>
+            <span class="skill-badge">R</span>
+            <span class="skill-badge">Tableau</span>
+            <span class="skill-badge">Power BI</span>
+            <span class="skill-badge">Google Apps Script</span>
+            <span class="skill-badge">ETL</span>
+            <span class="skill-badge">Data Modeling</span>
+            <span class="skill-badge">Statistical Analysis</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact-content">
+          <h2>Let's Connect</h2>
+          <p>
+            I'm always interested in new opportunities and collaborations.
+            Whether you need help with data analysis, dashboard development, or
+            process automation, I'd love to hear from you.
+          </p>
+          <div class="contact-buttons">
+            <a href="mailto:jonathon@example.com" class="btn btn-primary"
+              >Send Email</a
+            >
+            <a href="#" class="btn btn-secondary">Download Resume</a>
+          </div>
+          <div class="social-links">
+            <a
+              href="https://github.com"
+              class="social-link"
+              aria-label="GitHub"
+            >
+              <span>GH</span>
+            </a>
+            <a
+              href="https://public.tableau.com"
+              class="social-link"
+              aria-label="Tableau Public"
+            >
+              <span>TB</span>
+            </a>
+            <a
+              href="https://linkedin.com"
+              class="social-link"
+              aria-label="LinkedIn"
+            >
+              <span>LI</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2024 Jonathon Harris. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // === Improved Slot Machine Animation ===
+      document.addEventListener("DOMContentLoaded", () => {
+        // Configurable options
+        const REEL_SYMBOLS =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZ#<>!*@+$%^&~abcdefghijklmnopqrstuvwxyz0123456789";
+        const REEL_LENGTH = 15; // How many symbols to spin through (higher = longer spin)
+        const STAGGER_DELAY = 60; // ms delay per character
+        const START_DELAY = 1000; // ms delay before starting the whole animation
+        const ANIMATION_DURATION = 1500; // ms (must match CSS)
+
+        const h1 = document.querySelector(".slot-machine");
+        if (!h1) return;
+
+        const originalText = h1.innerText;
+        h1.innerHTML = ""; // Clear the H1
+        let charCount = 0;
+        let totalDelay = 0;
+
+        originalText.split("").forEach((char) => {
+          const charContainer = document.createElement("span");
+
+          // Handle spaces
+          if (char === " ") {
+            charContainer.className = "slot-space";
+            charContainer.innerHTML = "&nbsp;"; // Use a non-breaking space
+            h1.appendChild(charContainer);
+            return; // Don't create a reel for spaces
+          }
+
+          charContainer.className = "slot-char";
+
+          // 1. Add the invisible final char (this sets the container's width)
+          const finalChar = document.createElement("span");
+          finalChar.className = "slot-char-final";
+          finalChar.textContent = char;
+          charContainer.appendChild(finalChar);
+
+          // 2. Add the reel
+          const reel = document.createElement("span");
+          reel.className = "slot-reel";
+
+          // Add random symbols to the reel
+          for (let i = 0; i < REEL_LENGTH; i++) {
+            const symbol = document.createElement("span");
+            symbol.textContent =
+              REEL_SYMBOLS[Math.floor(Math.random() * REEL_SYMBOLS.length)];
+            reel.appendChild(symbol);
+          }
+
+          // Add the *actual* final character at the end of the reel
+          const finalReelChar = document.createElement("span");
+          finalReelChar.textContent = char;
+          reel.appendChild(finalReelChar);
+
+          // 3. Set custom properties for animation
+          // The final transform is (number of symbols) * (height of one char)
+          const finalTransform = `calc(-${REEL_LENGTH} * 1.2em)`;
+          reel.style.setProperty("--final-transform", finalTransform);
+
+          // Stagger the animation start
+          const delay = charCount * STAGGER_DELAY;
+          reel.style.transitionDelay = `${delay}ms`;
+          totalDelay = delay; // Keep track of the last animation's delay
+
+          charContainer.appendChild(reel);
+          h1.appendChild(charContainer);
+          charCount++;
+        });
+
+        // Trigger the animation after the specified delay
+        setTimeout(() => {
+          h1.classList.add("animate"); // Adds blur
+          h1.querySelectorAll(".slot-reel").forEach((reel) => {
+            reel.classList.add("animate");
+          });
+
+          // Add a 'settled' class after all animations are done
+          setTimeout(() => {
+            h1.classList.remove("animate");
+            h1.classList.add("settled");
+          }, totalDelay + ANIMATION_DURATION); // Total time = last delay + anim duration
+        }, START_DELAY);
+      });
+
+      // === Scroll Animation for Data to Vision Section ===
+      const fromToSection = document.getElementById("from-to");
+      const sketches = document.getElementById("sketches");
+      const dashboards = document.getElementById("dashboards");
+      const fromWord = document.getElementById("from");
+      const toWord = document.getElementById("to");
+
+      function updateAnimation() {
+        const rect = fromToSection.getBoundingClientRect();
+        const sectionHeight = fromToSection.offsetHeight;
+        const viewportHeight = window.innerHeight;
+
+        const scrollProgress = Math.max(
+          0,
+          Math.min(1, -rect.top / (sectionHeight - viewportHeight))
+        );
+
+        // Phase 1 (0-0.2): Sketches fade in
+        if (scrollProgress < 0.2) {
+          const phase1 = scrollProgress / 0.2;
+          sketches.style.opacity = phase1;
+          sketches.style.transform = `translate(-50%, -50%) scale(${
+            0.95 + phase1 * 0.05
+          })`;
+          sketches.style.filter = "blur(0px)";
+        } else {
+          sketches.style.opacity = 1;
+          sketches.style.transform = "translate(-50%, -50%) scale(1)";
+        }
+
+        // Phase 2 (0.2-0.35): "RAW DATA" fades in, sketches blur
+        if (scrollProgress < 0.2) {
+          fromWord.style.opacity = 0;
+        } else if (scrollProgress < 0.35) {
+          const phase2 = (scrollProgress - 0.2) / 0.15;
+          fromWord.style.opacity = phase2;
+          fromWord.style.transform = `translate(-50%, -50%) scale(${
+            0.8 + phase2 * 0.2
+          })`;
+          sketches.style.filter = `blur(${phase2 * 8}px)`;
+        } else {
+          fromWord.style.opacity = 1;
+          fromWord.style.transform = "translate(-50%, -50%) scale(1)";
+          sketches.style.filter = "blur(8px)";
+        }
+
+        // Phase 3 (0.5-0.65): "RAW DATA" and sketches fade out
+        if (scrollProgress < 0.5) {
+          // Keep visible
+        } else if (scrollProgress < 0.65) {
+          const phase3 = (scrollProgress - 0.5) / 0.15;
+          fromWord.style.opacity = 1 - phase3;
+          sketches.style.opacity = 1 - phase3;
+        } else {
+          fromWord.style.opacity = 0;
+          sketches.style.opacity = 0;
+        }
+
+        // Phase 4 (0.65-0.8): Dashboards fade in
+        if (scrollProgress < 0.65) {
+          dashboards.style.opacity = 0;
+        } else if (scrollProgress < 0.8) {
+          const phase4 = (scrollProgress - 0.65) / 0.15;
+          dashboards.style.opacity = phase4;
+          dashboards.style.transform = `translate(-50%, -50%) scale(${
+            0.95 + phase4 * 0.05
+          })`;
+          dashboards.style.filter = "blur(0px)";
+        } else {
+          dashboards.style.opacity = 1;
+          dashboards.style.transform = "translate(-50%, -50%) scale(1)";
+        }
+
+        // Phase 5 (0.8-0.95): "CLEAR INSIGHTS" fades in, dashboards blur
+        if (scrollProgress < 0.8) {
+          toWord.style.opacity = 0;
+        } else if (scrollProgress < 0.95) {
+          const phase5 = (scrollProgress - 0.8) / 0.15;
+          toWord.style.opacity = phase5;
+          toWord.style.transform = `translate(-50%, -50%) scale(${
+            0.8 + phase5 * 0.2
+          })`;
+          dashboards.style.filter = `blur(${phase5 * 8}px)`;
+        } else {
+          toWord.style.opacity = 1;
+          toWord.style.transform = "translate(-50%, -50%) scale(1)";
+          dashboards.style.filter = "blur(8px)";
+        }
+      }
+
+      // Throttle for performance
+      let ticking = false;
+      window.addEventListener("scroll", () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateAnimation();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // Initial call
+      updateAnimation();
+
+      // Stats Counter Animation
+      const animateStats = () => {
+        const stats = document.querySelectorAll(".stat-number");
+
+        stats.forEach((stat) => {
+          const target = parseInt(stat.getAttribute("data-target"));
+          const suffix = stat.getAttribute("data-suffix") || "";
+          const duration = 2000;
+          const increment = target / (duration / 16);
+          let current = 0;
+
+          const updateCount = () => {
+            current += increment;
+            if (current < target) {
+              stat.textContent = Math.floor(current) + suffix;
+              requestAnimationFrame(updateCount);
+            } else {
+              stat.textContent = target + suffix;
+            }
+          };
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  updateCount();
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.5 }
+          );
+
+          observer.observe(stat);
+        });
+      };
+
+      document.addEventListener("DOMContentLoaded", animateStats);
+
+      // === Smooth Scroll Navigation ===
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            document.getElementById("navLinks").classList.remove("active");
+          }
+        });
+      });
+
+      // === Mobile Menu Toggle ===
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+          navLinks.classList.remove("active");
+        }
+      });
+
+      // === Navbar Scroll Effect ===
+      const navbar = document.getElementById("navbar");
+      let lastScroll = 0;
+
+      window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+
+        lastScroll = currentScroll;
+      });
+
+      // === Intersection Observer for Animations ===
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll("section:not(#from-to), .project-card")
+        .forEach((el) => {
+          observer.observe(el);
+        });
+
+      // === Active Navigation Link ===
+      const sections = document.querySelectorAll("section[id]");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        document.querySelectorAll(".nav-links a").forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").slice(1) === current) {
+            link.classList.add("active");
+          }
+        });
+      });
+
+      // === Page Load Animation ===
+      window.addEventListener("load", () => {
+        const loader = document.getElementById("loading");
+        if (loader) {
+          setTimeout(() => {
+            loader.classList.remove("active");
+          }, 100);
+        }
+
+        document.querySelector(".hero").style.opacity = "1";
+        document.querySelector(".hero").style.transform = "translateY(0)";
+      });
+
+      // === Dynamic Year in Footer ===
+      const yearElement = document.querySelector("footer p");
+      if (yearElement) {
+        const currentYear = new Date().getFullYear();
+        yearElement.innerHTML = `&copy; ${currentYear} Jonathon Harris. All rights reserved.`;
+      }
+
+      // === Console Message ===
+      console.log(
+        "%c👋 Hey there!",
+        "font-size: 20px; font-weight: bold; color: #4a5568;"
+      );
+      console.log(
+        "%cThanks for checking out my portfolio!",
+        "font-size: 14px; color: #666;"
+      );
+      console.log(
+        "%cFeel free to reach out at jonra.harris@gmail.com",
+        "font-size: 14px; color: #666;"
+      );
+    </script>
+  </body>
+</html>

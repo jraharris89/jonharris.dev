@@ -131,9 +131,9 @@ nav.scrolled {
 }
 
 .logo {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  width: 90px;
+  max-width: 8vw;
+  height: auto;
 }
 
 .nav-links {
