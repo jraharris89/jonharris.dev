@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agency Metrics Dashboard</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #2563eb;
+        --primary-hover: #1d4ed8;
+        --awaiting-data: #dc2626;
+        --awaiting-process: #f59e0b;
+        --processed: #16a34a;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f9fafb;
+        --bg-tertiary: #f3f4f6;
+        --text-primary: #111827;
+        --text-secondary: #6b7280;
+        --text-tertiary: #9ca3af;
+        --border: #e5e7eb;
+        --border-light: #f3f4f6;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        line-height: 1.5;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 240px;
+        background: var(--bg-primary);
+        border-right: 1px solid var(--border);
+        padding: 1.5rem 1rem;
+        z-index: 100;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0 0.75rem;
+        margin-bottom: 2rem;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        background: var(--primary);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1.125rem;
+      }
+
+      .logo-text {
+        font-weight: 600;
+        font-size: 1.125rem;
+        color: var(--text-primary);
+      }
+
+      .nav-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .nav-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-tertiary);
+        padding: 0 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.625rem 0.75rem;
+        border-radius: 6px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.15s ease;
+        cursor: pointer;
+      }
+
+      .nav-item:hover {
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+      }
+
+      .nav-item.active {
+        background: var(--primary);
+        color: white;
+      }
+
+      .nav-icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Main Content */
+      .main-content {
+        margin-left: 240px;
+        min-height: 100vh;
+      }
+
+      /* Top Bar */
+      .top-bar {
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb-active {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .top-bar-actions {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .btn {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-secondary {
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        border: 1px solid var(--border);
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg-tertiary);
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-hover);
+      }
+
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+      }
+
+      /* Content Area */
+      .content {
+        padding: 2rem;
+      }
+
+      .page-header {
+        margin-bottom: 2rem;
+      }
+
+      .page-title {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .page-subtitle {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+      }
+
+      /* Filters Bar */
+      .filters-bar {
+        background: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .filter-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      select {
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 0.875rem;
+        color: var(--text-primary);
+        background: var(--bg-primary);
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+      }
+
+      select:hover {
+        border-color: var(--text-tertiary);
+      }
+
+      /* Stats Grid */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-lg);
+        background: var(--bg-primary);
+      }
+      .stat-blue {
+        background: #dbeafe;
+      }
+      .stat-red {
+        background: #fee2e2;
+      }
+      .stat-yellow {
+        background: #fef3c7;
+      }
+      .stat-green {
+        background: #dcfce7;
+      }
+      .stat-card:hover {
+        box-shadow: var(--shadow-lg);
+      }
+
+      .stat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 1rem;
+      }
+
+      .stat-label {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--text-secondary);
+      }
+
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+      }
+
+      .icon-blue {
+        background: #dbeafe;
+      }
+      .icon-red {
+        background: #fee2e2;
+      }
+      .icon-yellow {
+        background: #fef3c7;
+      }
+      .icon-green {
+        background: #dcfce7;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+      }
+
+      .stat-change {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+
+      /* Cards */
+      .card {
+        background: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+
+      .card-header {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .card-body {
+        padding: 1.5rem;
+      }
+
+      /* Table */
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background: var(--bg-tertiary);
+      }
+
+      th {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid var(--border);
+      }
+
+      tbody tr {
+        border-bottom: 1px solid var(--border-light);
+        transition: background 0.15s ease;
+      }
+
+      tbody tr:hover {
+        background: var(--bg-secondary);
+      }
+
+      td {
+        padding: 1rem;
+        font-size: 0.875rem;
+        color: var(--text-primary);
+      }
+
+      .agency-name {
+        font-weight: 600;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.625rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .badge-red {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .badge-yellow {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .badge-green {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      /* Progress Bar */
+      .progress-bar {
+        height: 8px;
+        background: var(--bg-tertiary);
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .progress-awaiting {
+        background: var(--awaiting-data);
+      }
+      .progress-processing {
+        background: var(--awaiting-process);
+      }
+      .progress-processed {
+        background: var(--processed);
+      }
+
+      /* Chart */
+      .chart-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+
+      .chart-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .chart-label {
+        min-width: 100px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .chart-bar-wrapper {
+        flex: 1;
+        height: 32px;
+        background: var(--bg-tertiary);
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .chart-bar {
+        height: 100%;
+        display: flex;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .bar-segment {
+        height: 100%;
+        transition: opacity 0.2s ease;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .bar-segment:hover {
+        opacity: 0.8;
+      }
+
+      .bar-awaiting {
+        background: var(--awaiting-data);
+      }
+      .bar-processing {
+        background: var(--awaiting-process);
+      }
+      .bar-processed {
+        background: var(--processed);
+      }
+
+      .chart-percentage {
+        min-width: 60px;
+        text-align: right;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .content {
+          padding: 1rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">T</div>
+        <div class="logo-text">TransDASH</div>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-title">Main</div>
+          <a href="#" class="nav-item active">
+            <svg
+              class="nav-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+              />
+            </svg>
+            Dashboard
+          </a>
+          <a href="#" class="nav-item">
+            <svg
+              class="nav-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+              />
+            </svg>
+            Analytics
+          </a>
+          <a href="#" class="nav-item">
+            <svg
+              class="nav-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg>
+            Agencies
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-title">Reports</div>
+          <a href="#" class="nav-item">
+            <svg
+              class="nav-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            Documents
+          </a>
+          <a href="#" class="nav-item">
+            <svg
+              class="nav-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+              />
+            </svg>
+            Metrics
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="breadcrumb">
+          <span>Dashboard</span>
+          <span>/</span>
+          <span class="breadcrumb-active">Agency Metrics</span>
+        </div>
+        <div class="top-bar-actions">
+          <button class="btn btn-secondary">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+              />
+            </svg>
+            Export
+          </button>
+          <button class="btn btn-primary">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+            Refresh
+          </button>
+          <div class="user-avatar">JH</div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <div class="page-header">
+          <h1 class="page-title">Agency Metrics</h1>
+          <p class="page-subtitle">
+            Monitor data collection and processing status across all agencies
+          </p>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-bar">
+          <div class="filter-group">
+            <label class="filter-label">Quarter</label>
+            <select>
+              <option>2025 Q3</option>
+              <option>2025 Q2</option>
+              <option>2025 Q1</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Status</label>
+            <select>
+              <option>All Statuses</option>
+              <option>Awaiting Data</option>
+              <option>Processing</option>
+              <option>Processed</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Agency</label>
+            <select>
+              <option>All Agencies</option>
+              <option>Agency 1</option>
+              <option>Agency 2</option>
+              <option>Agency 3</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card stat-blue">
+            <div class="stat-header">
+              <div>
+                <div class="stat-label">Total Metrics</div>
+              </div>
+              <div class="stat-icon icon-blue"></div>
+            </div>
+            <div class="stat-value">336</div>
+            <div class="stat-change">8 agencies tracked</div>
+          </div>
+
+          <div class="stat-card stat-red">
+            <div class="stat-header">
+              <div>
+                <div class="stat-label">Awaiting Data</div>
+              </div>
+              <div class="stat-icon icon-red"></div>
+            </div>
+            <div class="stat-value">108</div>
+            <div class="stat-change">32% of total</div>
+          </div>
+
+          <div class="stat-card stat-yellow">
+            <div class="stat-header">
+              <div>
+                <div class="stat-label">In Processing</div>
+              </div>
+              <div class="stat-icon icon-yellow"></div>
+            </div>
+            <div class="stat-value">168</div>
+            <div class="stat-change">50% of total</div>
+          </div>
+
+          <div class="stat-card stat-green">
+            <div class="stat-header">
+              <div>
+                <div class="stat-label">Processed</div>
+              </div>
+              <div class="stat-icon icon-green"></div>
+            </div>
+            <div class="stat-value">0</div>
+            <div class="stat-change">0% complete</div>
+          </div>
+        </div>
+
+        <!-- Chart Card -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Agency Status Overview</h2>
+            <span class="badge badge-yellow">In Progress</span>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" id="chartContainer"></div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Agency Details</h2>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Agency</th>
+                  <th>Total Metrics</th>
+                  <th>Awaiting Data</th>
+                  <th>Processing</th>
+                  <th>Processed</th>
+                  <th>Progress</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const agencies = [
+        {
+          name: "Agency 1",
+          total: 25,
+          awaiting: 8,
+          processing: 8,
+          processed: 9,
+        },
+        {
+          name: "Agency 2",
+          total: 16,
+          awaiting: 3,
+          processing: 7,
+          processed: 6,
+        },
+        {
+          name: "Agency 3",
+          total: 37,
+          awaiting: 7,
+          processing: 24,
+          processed: 6,
+        },
+        {
+          name: "Agency 4",
+          total: 57,
+          awaiting: 6,
+          processing: 38,
+          processed: 13,
+        },
+        {
+          name: "Agency 5",
+          total: 30,
+          awaiting: 5,
+          processing: 21,
+          processed: 4,
+        },
+        {
+          name: "Agency 6",
+          total: 30,
+          awaiting: 7,
+          processing: 20,
+          processed: 3,
+        },
+        {
+          name: "Agency 7",
+          total: 50,
+          awaiting: 41,
+          processing: 6,
+          processed: 3,
+        },
+        {
+          name: "Agency 8",
+          total: 33,
+          awaiting: 11,
+          processing: 14,
+          processed: 8,
+        },
+      ];
+
+      // Populate table
+      const tableBody = document.getElementById("tableBody");
+      agencies.forEach((agency) => {
+        const processedPct = (agency.processed / agency.total) * 100;
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                <td class="agency-name">${agency.name}</td>
+                <td><strong>${agency.total}</strong></td>
+                <td><span class="badge badge-red">${agency.awaiting}</span></td>
+                <td><span class="badge badge-yellow">${agency.processing}</span></td>
+                <td><span class="badge badge-green">${agency.processed}</span></td>
+                <td>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-processed" style="width: ${processedPct}%"></div>
+                    </div>
+                </td>
+            `;
+        tableBody.appendChild(row);
+      });
+
+      // Create chart
+      const chartContainer = document.getElementById("chartContainer");
+      agencies.forEach((agency) => {
+        const awaitingPct = (agency.awaiting / agency.total) * 100;
+        const processingPct = (agency.processing / agency.total) * 100;
+        const processedPct = (agency.processed / agency.total) * 100;
+        const completionPct = 100 - awaitingPct;
+
+        const chartRow = document.createElement("div");
+        chartRow.className = "chart-row";
+        chartRow.innerHTML = `
+                <div class="chart-label">${agency.name}</div>
+                <div class="chart-bar-wrapper">
+                    <div class="chart-bar">
+                        ${
+                          awaitingPct > 0
+                            ? `<div class="bar-segment bar-awaiting" style="width: ${awaitingPct}%"></div>`
+                            : ""
+                        }
+                        ${
+                          processingPct > 0
+                            ? `<div class="bar-segment bar-processing" style="width: ${processingPct}%"></div>`
+                            : ""
+                        }
+                        ${
+                          processedPct > 0
+                            ? `<div class="bar-segment bar-processed" style="width: ${processedPct}%"></div>`
+                            : ""
+                        }
+                    </div>
+                </div>
+                <div class="chart-percentage">${completionPct.toFixed(0)}%</div>
+            `;
+        chartContainer.appendChild(chartRow);
+      });
+    </script>
+  </body>
+</html>
