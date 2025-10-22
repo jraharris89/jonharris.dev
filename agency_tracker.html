@@ -7,7 +7,7 @@
     <title>Agency Measures Tracker — Jonathon Harris</title>
     <meta
       name="description"
-      content="Automated reporting system for agency metrics, built with Google Apps Script and JavaScript."
+      content="Automated reporting system that reduces manual data processing by 75% while tracking agency performance metrics through Google Apps Script."
     />
     <link
       rel="icon"
@@ -189,27 +189,50 @@
         color: var(--text-light);
         font-size: 0.875rem;
       }
+      .code-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .code-label {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+      }
+      .code-note {
+        color: var(--text-light);
+        font-size: 0.875rem;
+      }
       .dashboard-img {
         max-width: 100%;
-        max-height: 700px;
+        /* REMOVE max-height: 700px; */
         width: 100%;
-        height: auto;
+        /* height: auto; */ /* Let flexbox handle height */
         border: 1px solid var(--border);
         border-radius: 8px;
-        overflow: auto;
+        overflow: auto; /* Keep in case image is very wide */
         background: var(--bg-tertiary);
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-grow: 1; /* <-- ADD THIS */
+        min-height: 0; /* <-- ADD THIS (important for flex sizing) */
       }
+
       .dashboard-img img {
         width: 100%;
-        height: auto;
+        /* REMOVE height: auto; */
+        height: 100%; /* <-- ADD THIS */
         object-fit: contain;
         border-radius: 8px;
         display: block;
-        max-height: 680px;
+        /* REMOVE max-height: 680px; */
       }
+      /* Project Details Section */
       .project-details {
         max-width: 1400px;
         margin: 0 auto;
@@ -308,20 +331,24 @@
       }
       .header-content,
       .dashboard-wrapper,
+      .code-wrapper,
       .detail-card {
-        animation: fadeIn 0.6s ease forwards;
+        animation: fadeIn 0.7s ease forwards;
       }
       .dashboard-wrapper {
         animation-delay: 0.2s;
       }
-      .detail-card:nth-child(1) {
+      .code-wrapper {
         animation-delay: 0.3s;
       }
-      .detail-card:nth-child(2) {
+      .detail-card:nth-child(1) {
         animation-delay: 0.4s;
       }
-      .detail-card:nth-child(3) {
+      .detail-card:nth-child(2) {
         animation-delay: 0.5s;
+      }
+      .detail-card:nth-child(3) {
+        animation-delay: 0.6s;
       }
       .code-section {
         max-width: 1400px;
@@ -333,12 +360,25 @@
         padding: 1.5rem;
         border-radius: 12px;
         box-shadow: 0 4px 20px var(--shadow);
-        height: calc(100vh - 355px);
-        min-height: 829px;
         display: flex;
         flex-direction: column;
         max-width: 1400px;
         margin: 0 auto;
+      }
+      #gist-viewer .gist .gist-file {
+        overflow-x: auto; /* Adds horizontal scrollbar if needed */
+        max-width: 100%; /* Ensures it doesn't try to be wider than the container */
+      }
+
+      /* Optional: To prevent the line numbers from getting cut off */
+      #gist-viewer .gist .lines {
+        overflow: visible !important;
+      }
+
+      /* Optional: Ensure the outer Gist div also respects boundaries */
+      #gist-viewer .gist {
+        max-width: 100%;
+        overflow: hidden; /* Hide anything spilling from the Gist structure itself */
       }
       footer {
         max-width: 1400px;
@@ -346,6 +386,33 @@
         padding: 2rem;
         text-align: center;
         color: var(--text-light);
+      }
+      .section-title {
+        margin-bottom: 1.5rem;
+      }
+      .gist-btn {
+        flex: 1;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        background: #f8f9fa;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      }
+      .gist-btn:hover {
+        background: #e2e8f0;
+        color: var(--accent);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+      }
+      .gist-btn:active {
+        background: #7dd38a;
+        color: var(--accent-hover);
+      }
+      .gist-btn.selected {
+        background: #a6c7a8;
+        color: var(--text-primary);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
       }
       @media (max-width: 1300px) {
         .dashboard-wrapper {
@@ -385,8 +452,6 @@
         }
         .code-wrapper {
           padding: 1rem;
-          height: calc(100vh - 240px);
-          min-height: 500px;
         }
         .details-grid {
           grid-template-columns: 1fr;
@@ -418,9 +483,12 @@
       <div class="header-content">
         <h1 class="project-title">Agency Measures Tracker</h1>
         <p class="project-subtitle">
-          Automated reporting system built with Google Apps Script and
-          JavaScript that syncs CSV data, processes metrics, and generates
-          weekly performance reports. Reduced manual reporting time by 75%.
+          Agency Measures Tracker is an automated reporting system that imports
+          CSV data from multiple sources, validates and analyzes agency
+          performance metrics, and generates comprehensive weekly reports. Built
+          with Google Apps Script and JavaScript, it eliminates manual data
+          entry and spreadsheet maintenance, ensuring consistent, accurate
+          reporting across teams.
         </p>
         <div class="project-meta">
           <div class="meta-item">
@@ -437,7 +505,7 @@
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <span>2023 - Present</span>
+            <span>2024 - Present</span>
           </div>
           <div class="meta-item">
             <svg
@@ -469,7 +537,7 @@
                 d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
               />
             </svg>
-            <span>8+ Agencies</span>
+            <span>12+ Agencies</span>
           </div>
         </div>
         <div class="tech-tags">
@@ -484,14 +552,33 @@
       <div class="dashboard-wrapper">
         <div class="dashboard-info">
           <h2 class="dashboard-label">System Workflow Overview</h2>
-          <p class="fullscreen-hint">
-            💡 This project automates metric processing and reporting for
-            agencies
+          <p class="fullscreen-hint" style="display: flex; align-items: center">
+            <svg
+              class="meta-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style="
+                vertical-align: middle;
+                margin-right: 6px;
+                margin-bottom: 3px;
+                width: 22px;
+                height: 22px;
+              "
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+              />
+            </svg>
+            Example image of the internal 'Agency Measures Tracker' interface.
           </p>
         </div>
         <div class="dashboard-img">
           <img
-            src="images/agency_tracker.png"
+            src="images/agency_tracker.jpg"
             alt="Agency Measures Tracker Dashboard"
           />
         </div>
@@ -500,11 +587,35 @@
 
     <section class="code-section">
       <div class="code-wrapper">
-        <div class="code-container">
-          <h2 class="section-title">Technical Implementation</h2>
-          <p class="section-subtitle">
-            Core code snippets powering the automation system
+        <div class="code-info">
+          <h2 class="code-label">Technical Implementation</h2>
+          <p class="code-note" style="display: flex; align-items: center">
+            <svg
+              class="meta-icon"
+              fill="#F4B400"
+              stroke="#F4B400"
+              viewBox="0 0 24 24"
+              style="vertical-align: middle; margin-right: 6px"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                fill="none"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v4m0 4h.01"
+                fill="none"
+              />
+            </svg>
+            Code snippets shown with confidential data redacted.
           </p>
+        </div>
+        <div class="code-container">
           <div
             class="gist-buttons"
             style="
@@ -516,7 +627,7 @@
           >
             <button
               class="gist-btn"
-              data-gist="1"
+              data-gist="config"
               style="
                 flex: 1;
                 padding: 1rem;
@@ -527,7 +638,12 @@
                 cursor: pointer;
               "
             >
-              Data Sync Function
+              <div style="font-weight: 600; margin-bottom: 0.5rem">
+                Configuration Hub
+              </div>
+              <div style="font-size: 0.875rem; color: #666; font-weight: 400">
+                Core settings, spreadsheet IDs, and fiscal year rules
+              </div>
             </button>
             <button
               class="gist-btn"
@@ -542,7 +658,12 @@
                 cursor: pointer;
               "
             >
-              Metric Processing
+              <div style="font-weight: 600; margin-bottom: 0.5rem">
+                Quarterly Rollover Automation
+              </div>
+              <div style="font-size: 0.875rem; color: #666; font-weight: 400">
+                Dashboard duplication and smart data migration
+              </div>
             </button>
             <button
               class="gist-btn"
@@ -557,7 +678,12 @@
                 cursor: pointer;
               "
             >
-              Report Generation
+              <div style="font-weight: 600; margin-bottom: 0.5rem">
+                Statistical Report Generator
+              </div>
+              <div style="font-size: 0.875rem; color: #666; font-weight: 400">
+                Trend analysis, benchmarking, and automated reporting
+              </div>
             </button>
           </div>
           <div
@@ -569,37 +695,177 @@
               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
               padding: 2rem;
               min-height: 200px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
             "
           >
-            <!-- Gist will be loaded here -->
+            <p style="color: #666; text-align: center; font-size: 1.1rem">
+              Explore the code snippets by selecting an option above.
+            </p>
           </div>
         </div>
-      </div>
-      <script>
-        const gistMap = {
-          1: "https://gist.github.com/jraharris89/f3d2efc43d8bf8cde1cb49cfb2cbb313.js",
-          2: "https://gist.github.com/jraharris89/your-gist-id2.js",
-          3: "https://gist.github.com/jraharris89/your-gist-id3.js",
-        };
-        const viewer = document.getElementById("gist-viewer");
-        const buttons = document.querySelectorAll(".gist-btn");
-        function loadGist(num) {
-          viewer.innerHTML = "";
-          const script = document.createElement("script");
-          script.src = gistMap[num];
-          viewer.appendChild(script);
-        }
-        buttons.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            buttons.forEach((b) => (b.style.background = "#f8f9fa"));
-            btn.style.background = "#e2e8f0";
-            loadGist(btn.dataset.gist);
+        <script>
+          const gistMap = {
+            config:
+              "https://gist.github.com/jraharris89/f3d2efc43d8bf8cde1cb49cfb2cbb313.js",
+            2: "https://gist.github.com/jraharris89/2a0e5e1e239dfca55cda72d99f8a7b26.js",
+            3: "https://gist.github.com/jraharris89/f2f5c9746ea55fcc07c3669a4c514da8.js",
+          };
+
+          const viewer = document.getElementById("gist-viewer");
+          const buttons = document.querySelectorAll(".gist-btn");
+
+          // --- NEW: Store the default "click a button" message ---
+          const defaultViewerHTML = viewer.innerHTML;
+          // --- NEW: Track the currently active Gist ---
+          let activeGistKey = null;
+
+          // Store the original document.write function
+          const originalDocumentWrite = document.write;
+
+          // A variable to capture the Gist's HTML content
+          let gistContent = "";
+
+          /**
+           * Loads a Gist by temporarily overriding document.write
+           * to capture the Gist's content.
+           */
+          function loadGist(key) {
+            console.log(`[GIST DEBUG] 1. Starting loadGist for key: "${key}"`);
+            const scriptUrl = gistMap[key];
+
+            // Check for placeholder URLs
+            if (!scriptUrl || scriptUrl.includes("your-gist-id")) {
+              viewer.innerHTML = `<p style="color: #666;">Please select a valid Gist snippet.</p>`;
+              console.warn(
+                `[GIST DEBUG] Gist key "${key}" points to a placeholder URL.`
+              );
+              return;
+            }
+
+            // Show a loading message and clear old content
+            viewer.innerHTML = `<p style="color: #666;">Loading code...</p>`;
+            gistContent = ""; // Reset the content capturer
+
+            // 1. Hijack document.write
+            console.log("[GIST DEBUG] 2. Hijacking document.write");
+            document.write = function (content) {
+              console.log(
+                "[GIST DEBUG] 3. document.write was called with:",
+                content
+              );
+
+              if (content.includes('<link rel="stylesheet"')) {
+                console.log("[GIST DEBUG] 3a. Found stylesheet.");
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = content;
+                const link = tempDiv.firstChild;
+                if (
+                  link &&
+                  link.tagName === "LINK" &&
+                  !document.querySelector(`link[href="${link.href}"]`)
+                ) {
+                  document.head.appendChild(link);
+                }
+              } else if (content.includes('<div id="gist')) {
+                console.log("[GIST DEBUG] 3b. Found Gist HTML content.");
+                gistContent += content;
+              } else {
+                console.log(
+                  "[GIST DEBUG] 3c. document.write content was NOT recognized."
+                );
+              }
+            };
+
+            // 2. Remove any old Gist script
+            const oldScript = document.getElementById("gist-loader-script");
+            if (oldScript) {
+              console.log("[GIST DEBUG] Removing old script tag.");
+              oldScript.remove();
+            }
+
+            // 3. Create and inject the new Gist script
+            const script = document.createElement("script");
+            script.id = "gist-loader-script";
+            // We add a unique timestamp to "bust" the browser cache
+            const cacheBustedUrl = `${scriptUrl}?v=${new Date().getTime()}`;
+            console.log(
+              `[GIST DEBUG] 4. Injecting new script tag with src: ${cacheBustedUrl}`
+            );
+            script.src = cacheBustedUrl;
+
+            // 4. When the script finishes loading (or errors)...
+            script.onload = function () {
+              console.log("[GIST DEBUG] 5a. script.onload fired.");
+              console.log(
+                `[GIST DEBUG] 5b. Final captured gistContent:`,
+                gistContent
+              );
+              document.write = originalDocumentWrite; // Restore
+
+              if (gistContent) {
+                console.log(
+                  "[GIST DEBUG] 5c. Content found. Injecting into viewer."
+                );
+                // This line replaces the "Loading..." message
+                viewer.innerHTML = gistContent;
+              } else {
+                console.log(
+                  "[GIST DEBUG] 5d. No content captured. Showing error."
+                );
+                viewer.innerHTML = `<p style="color: red;">Error: Could not load code snippet.</p>`;
+              }
+            };
+
+            script.onerror = function (e) {
+              console.error(
+                "[GIST DEBUG] 6. script.onerror fired. Script failed to load.",
+                e
+              );
+              document.write = originalDocumentWrite; // Restore
+              viewer.innerHTML = `<p style="color: red;">Error: Script failed to load. Check console.</p>`;
+            };
+
+            // 5. Add the script to the page, which triggers the browser to load it
+            document.body.appendChild(script);
+          }
+
+          // --- Event Listeners (MODIFIED) ---
+          buttons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const clickedKey = btn.dataset.gist;
+
+              // --- NEW: Check if the clicked button is already active ---
+              if (activeGistKey === clickedKey) {
+                // --- DESELECT LOGIC ---
+                activeGistKey = null; // Clear the active state
+                btn.style.background = "#f8f9fa"; // Reset this button's style
+                btn.classList.remove("selected");
+                viewer.innerHTML = defaultViewerHTML; // Restore the default message
+                document.write = originalDocumentWrite; // Safety restore
+
+                // Clean up the script tag
+                const oldScript = document.getElementById("gist-loader-script");
+                if (oldScript) oldScript.remove();
+              } else {
+                // --- SELECT LOGIC (Original logic) ---
+                activeGistKey = clickedKey; // Set the new active state
+                buttons.forEach((b) => {
+                  b.style.background = "#f8f9fa"; // Reset all
+                  b.classList.remove("selected");
+                }); // Reset all
+                btn.style.background = "#a6c7a8"; // Highlight this one
+                btn.classList.add("selected");
+                loadGist(clickedKey); // Load the Gist
+              }
+            });
           });
-        });
-        // Load first gist by default
-        loadGist(1);
-        buttons[0].style.background = "#e2e8f0";
-      </script>
+
+          // --- Initial Load (REMOVED) ---
+          // No Gist is loaded by default.
+        </script>
+      </div>
     </section>
 
     <section class="project-details">
@@ -616,20 +882,21 @@
         <div class="detail-card">
           <h3>Key Features</h3>
           <ul>
-            <li>Automated CSV data sync</li>
-            <li>Metric processing and validation</li>
-            <li>Weekly report generation</li>
-            <li>Customizable agency KPIs</li>
-            <li>Integration with Google Sheets</li>
+            <li>Automated data import from multiple CSV sources</li>
+            <li>Real-time metric validation with error detection</li>
+            <li>Scheduled weekly reports delivered automatically</li>
+            <li>Customizable KPI dashboards tailored to agency needs</li>
+            <li>Seamless Google Sheets integration for familiar workflows</li>
           </ul>
         </div>
         <div class="detail-card">
           <h3>Impact & Results</h3>
           <p>
-            Reduced manual reporting time by 75%, improved data accuracy, and
-            enabled agencies to focus on analysis rather than data wrangling.
-            The system is used by multiple agencies for streamlined performance
-            tracking and reporting.
+            Reduced manual reporting time by 75%, eliminating up to 10 hours of
+            weekly data processing. Improved data accuracy through automated
+            validation and enabled agency teams to focus on strategic analysis
+            rather than manual data management. Currently deployed across
+            multiple agencies, processing thousands of data points quarterly.
           </p>
         </div>
       </div>

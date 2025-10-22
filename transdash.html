@@ -188,14 +188,14 @@
 
       .dashboard-wrapper {
         background: white;
-        padding: 1.5rem;
+        padding: 2rem;
         border-radius: 12px;
         box-shadow: 0 4px 20px var(--shadow);
-        height: calc(100vh - 355px);
-        min-height: 829px;
+        height: auto;
+        min-height: 800px;
         display: flex;
         flex-direction: column;
-        max-width: fit-content;
+        max-width: 1400px;
         margin: 0 auto;
       }
 
@@ -228,6 +228,7 @@
         border-radius: 8px;
         overflow: auto;
         background: var(--bg-tertiary);
+        margin: 0 auto;
         /* padding: 1rem; */
       }
 
@@ -235,19 +236,18 @@
         width: 100%;
         height: 100%;
       }
+
       /* Project Details Section */
       .project-details {
         max-width: 1400px;
         margin: 0 auto;
         padding: 2rem;
       }
-
       .details-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1.5rem;
       }
-
       .detail-card {
         background: white;
         padding: 2rem;
@@ -258,7 +258,6 @@
         position: relative;
         overflow: hidden;
       }
-
       .detail-card::before {
         content: "";
         position: absolute;
@@ -271,17 +270,14 @@
         transform-origin: left;
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
-
       .detail-card:hover {
         transform: translateY(-8px);
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
         border-color: #2c3e3f;
       }
-
       .detail-card:hover::before {
         transform: scaleX(1);
       }
-
       .detail-card h3 {
         font-size: 1.35rem;
         margin-bottom: 1.25rem;
@@ -291,23 +287,19 @@
         align-items: center;
         gap: 0.5rem;
       }
-
       .card-icon {
         font-size: 1.5rem;
         flex-shrink: 0;
       }
-
       .detail-card p {
         color: var(--text-secondary);
         line-height: 1.8;
         font-size: 1rem;
       }
-
       .detail-card ul {
         list-style: none;
         padding: 0;
       }
-
       .detail-card li {
         padding: 0.75rem 0;
         color: #2c3e3f;
@@ -316,7 +308,6 @@
         line-height: 1.6;
         transition: all 0.3s ease;
       }
-
       .detail-card li:before {
         content: "→";
         position: absolute;
@@ -326,30 +317,44 @@
         font-size: 1.2rem;
         transition: all 0.3s ease;
       }
-
       .detail-card li:hover {
         color: var(--text-primary);
         padding-left: 2.5rem;
       }
-
       .detail-card li:hover:before {
         left: 0.5rem;
         transform: scale(1.2);
       }
-
-      /* Alternating card styles */
       .detail-card:nth-child(1) {
         background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
       }
-
       .detail-card:nth-child(2) {
         background: linear-gradient(135deg, #ffffff 0%, #fff8f8 100%);
       }
-
       .detail-card:nth-child(3) {
         background: linear-gradient(135deg, #ffffff 0%, #f8fff8 100%);
       }
-
+      .header-content,
+      .dashboard-wrapper,
+      .code-wrapper,
+      .detail-card {
+        animation: fadeIn 0.7s ease forwards;
+      }
+      .dashboard-wrapper {
+        animation-delay: 0.2s;
+      }
+      .code-wrapper {
+        animation-delay: 0.3s;
+      }
+      .detail-card:nth-child(1) {
+        animation-delay: 0.4s;
+      }
+      .detail-card:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+      .detail-card:nth-child(3) {
+        animation-delay: 0.6s;
+      }
       /* Footer */
       footer {
         max-width: 1400px;
@@ -389,7 +394,7 @@
         }
 
         .dashboard-wrapper {
-          padding: 1rem;
+          padding: 1.5rem;
           height: calc(100vh - 240px);
           min-height: 500px;
         }
@@ -452,7 +457,7 @@
   <body>
     <nav>
       <div class="nav-container">
-        <a href="combined.html" class="back-button">
+        <a href="index.html" class="back-button">
           <span>←</span>
           <span>Back to Portfolio</span>
         </a>
@@ -462,11 +467,11 @@
 
     <header class="project-header">
       <div class="header-content">
-        <h1 class="project-title">TransDASH National Performance Dashboard</h1>
+        <h1 class="project-title">Performance Dashboard</h1>
         <p class="project-subtitle">
           Interactive Tableau visualization platform analyzing performance
           metrics for U.S. transit agencies with real-time data updates, custom
-          KPI tracking, and comparative analysis.
+          KPI tracking, and comparative analysis across 12+ agencies.
         </p>
 
         <div class="project-meta">
@@ -534,8 +539,28 @@
       <div class="dashboard-wrapper">
         <div class="dashboard-info">
           <h2 class="dashboard-label">Live Interactive Dashboard</h2>
-          <p class="fullscreen-hint">
-            💡 Click the fullscreen icon in the dashboard for best viewing
+          <p class="fullscreen-hint" style="display: flex; align-items: center">
+            <svg
+              class="meta-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style="
+                vertical-align: middle;
+                margin-right: 6px;
+                margin-bottom: 3px;
+                width: 22px;
+                height: 22px;
+              "
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+              />
+            </svg>
+            Click the fullscreen icon in the dashboard for best viewing
           </p>
         </div>
         <div class="tableau-embed">
@@ -582,7 +607,7 @@
     <section class="project-details">
       <div class="details-grid">
         <div class="detail-card">
-          <h3>Project Overview</h3>
+          <h3>📊 Project Overview</h3>
           <p>
             TransDASH is a comprehensive performance monitoring platform that
             provides real-time insights into key operational metrics across the
@@ -593,7 +618,7 @@
         </div>
 
         <div class="detail-card">
-          <h3>Key Features</h3>
+          <h3>🎯 Key Features</h3>
           <ul>
             <li>Real-time performance tracking</li>
             <li>Comparative agency analysis</li>
@@ -604,7 +629,7 @@
         </div>
 
         <div class="detail-card">
-          <h3>Impact & Results</h3>
+          <h3>💡 Impact & Results</h3>
           <p>
             Reduced reporting time by 60%, enabled proactive decision-making
             through early trend identification, and provided stakeholders with

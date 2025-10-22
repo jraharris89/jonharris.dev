@@ -25,7 +25,7 @@
       content="I build dashboards, automate data workflows, and design tools that help teams make smarter decisions."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://jonathonharris.com" />
+    <meta property="og:url" content="https://jonharris.dev" />
     <meta property="og:image" content="/images/og-preview.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -39,7 +39,11 @@
     />
     <meta name="twitter:image" content="/images/og-preview.jpg" />
 
-    <link rel="icon" type="image/png" href="images/isolated_logo(circle).png" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>📊</text></svg>"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,7 +51,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap"
+      rel="stylesheet"
+    />
     <style>
       /* === CSS Reset & Base Styles === */
       * {
@@ -72,6 +79,7 @@
         /* Typography */
         --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
           sans-serif;
+        --font-code: "Source Code Pro", monospace; /* Font for animation */
         --font-size-base: 16px;
         --line-height: 1.6;
 
@@ -84,10 +92,6 @@
 
         /* Animation */
         --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      html {
-        scroll-behavior: smooth;
       }
 
       body {
@@ -112,10 +116,32 @@
       }
 
       h1 {
+        /* Default H1 styles */
         font-size: clamp(2rem, 5vw, 3.5rem);
         font-weight: 700;
       }
 
+      /* === NEW H1 Random Letter Reveal Animation Styles === */
+      h1#hero-title {
+        color: var(--text-primary);
+        font-family: var(--font-code); /* Already correct */
+        position: relative;
+        display: inline-block;
+        white-space: pre;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        letter-spacing: 0.02em; /* Optional: adds slight spacing stability */
+      }
+      h1#hero-title .char {
+        display: inline-block;
+        transition: filter 0.15s ease; /* Smooth blur transition */
+      }
+
+      h1#hero-title .char.shifting {
+        filter: blur(1px); /* Adjust blur intensity (2px-5px) */
+      }
       h2 {
         font-size: clamp(1.5rem, 4vw, 2.5rem);
         margin-bottom: var(--spacing-md);
@@ -254,84 +280,15 @@
         animation: fadeInUp 0.6s ease forwards;
       }
 
-      .hero h1 {
+      .hero h1#hero-title {
+        /* Target the specific h1 */
         margin-bottom: var(--spacing-md);
-        opacity: 0;
-        animation: fadeInUp 0.8s ease forwards;
-        animation-delay: 0.2s;
+        opacity: 1; /* Keep visible for animation */
+        animation: none; /* Override section fade-in */
         color: var(--text-primary);
-        font-family: var(--font-main);
+        font-family: var(--font-code); /* Monospace font */
+        min-height: 1.2em; /* Reserve space */
       }
-
-      /* === NEW SLOT MACHINE EFFECT STYLES === */
-      .slot-machine {
-        /* This is the H1 */
-        display: flex; /* Use flex to handle spaces correctly */
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      .slot-char {
-        display: inline-block;
-        position: relative;
-        height: 1.2em; /* The "viewport" */
-        line-height: 1.2em;
-        overflow: hidden;
-        vertical-align: bottom;
-        min-width: 0.3em;
-        /* Add motion blur-like effect */
-        filter: blur(0);
-        transition: filter 0.3s ease-out;
-      }
-
-      .slot-machine.animate .slot-char {
-        filter: blur(1px); /* Add blur during animation */
-      }
-      .slot-machine.settled .slot-char {
-        filter: blur(0); /* Remove blur when settled */
-      }
-
-      .slot-space {
-        display: inline-block;
-        width: 0.3em; /* Space width */
-      }
-
-      .slot-char-final {
-        /* This is invisible, just sets the width of the container */
-        visibility: hidden;
-      }
-
-      .slot-reel {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-
-        /* Start at the top of the reel */
-        transform: translateY(0);
-
-        /* This is the magic! 
-          We use a transition for the transform.
-          The cubic-bezier creates a "back-and-forth" elastic bounce.
-        */
-        transition-property: transform;
-        transition-duration: 1.5s;
-        transition-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
-      }
-
-      .slot-reel.animate {
-        /* The JS will set this custom property to the final position */
-        transform: translateY(var(--final-transform));
-      }
-
-      .slot-reel > span {
-        height: 1.2em;
-        line-height: 1.2em;
-      }
-      /* === END NEW STYLES === */
 
       .hero .subtitle {
         font-size: clamp(1.125rem, 2.5vw, 1.5rem);
@@ -527,16 +484,15 @@
       }
 
       .project-card {
-  background: var(--bg-primary);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: var(--transition);
-  border: 1px solid var(--border);
-  opacity: 0;
-  animation: fadeInUp 0.8s ease forwards;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+        background: var(--bg-primary);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: var(--transition);
+        border: 1px solid var(--border);
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+        display: flex;
+        flex-direction: column;
       }
 
       .project-card:nth-child(1) {
@@ -557,7 +513,7 @@
       .project-image {
         width: 100%;
         height: 200px;
-        background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -566,10 +522,19 @@
       }
 
       .project-content {
-  padding: var(--spacing-md);
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+        padding: var(--spacing-md);
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .project-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+        flex-wrap: wrap;
       }
 
       .project-title {
@@ -579,17 +544,12 @@
       }
 
       .project-description {
-  color: var(--text-secondary);
-  margin-bottom: var(--spacing-sm);
-  line-height: 1.6;
-  flex-grow: 1;
+        color: var(--text-secondary);
+        margin-bottom: auto;
+        line-height: 1.6;
+        padding-bottom: var(--spacing-md);
       }
 
-      .project-footer {
-        margin-top: auto;
-        display: flex;
-        flex-direction: column;
-      }
       .project-tech {
         display: flex;
         flex-wrap: wrap;
@@ -803,10 +763,9 @@
         #from {
           display: none;
         }
-        /* Disable slot machine animation if user prefers reduced motion */
-        .slot-reel {
-          transition: none;
-          transform: var(--final-transform);
+        /* Disable text animation if user prefers reduced motion */
+        #hero-title {
+          /* You might need JS to check this and skip animation */
         }
       }
 
@@ -851,10 +810,10 @@
           <span></span>
         </button>
         <ul class="nav-links" id="navLinks">
-          <li><a href="#hero" class="nav-jump">Home</a></li>
-          <li><a href="#projects" class="nav-jump">Projects</a></li>
-          <li><a href="#about" class="nav-jump">About</a></li>
-          <li><a href="#contact" class="nav-jump">Contact</a></li>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
     </nav>
@@ -862,10 +821,11 @@
     <section class="hero" id="hero">
       <div class="container">
         <div class="hero-content">
-          <h1 class="slot-machine">Data Analyst & Developer</h1>
+          <h1 id="hero-title">Data Analyst & Developer</h1>
           <p class="subtitle">
-            I build dashboards, automate data workflows, and design tools that
-            help teams make smarter decisions.
+            I design end-to-end data solutions—automating workflows, building
+            dashboards that surface key insights, and analyzing trends that help
+            teams make confident, data-driven decisions.
           </p>
           <div class="hero-stats">
             <div class="stat-item">
@@ -882,12 +842,8 @@
             </div>
           </div>
           <div class="hero-buttons">
-            <a href="#projects" class="btn btn-primary" id="jump-projects"
-              >View Projects</a
-            >
-            <a href="#contact" class="btn btn-secondary" id="jump-contact"
-              >Contact</a
-            >
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            <a href="#contact" class="btn btn-secondary">Contact</a>
           </div>
         </div>
       </div>
@@ -924,13 +880,7 @@
         <h2>Featured Projects</h2>
         <div class="projects-grid">
           <div class="project-card">
-            <div class="project-image">
-              <img
-                src="images/Transdash_Dashboard.png"
-                alt="TransDASH Dashboard"
-                style="width: 100%; height: 100%; object-fit: cover"
-              />
-            </div>
+            <div class="project-image">📊</div>
             <div class="project-content">
               <h3 class="project-title">
                 TransDASH National Performance Dashboard
@@ -941,22 +891,20 @@
                 updates, custom KPI tracking, and comparative analysis across
                 10+ agencies.
               </p>
-              <div class="project-footer">
-                <div class="project-tech">
-                  <span class="tech-tag">Tableau</span>
-                  <span class="tech-tag">SQL</span>
-                  <span class="tech-tag">ETL</span>
-                  <span class="tech-tag">API Integration</span>
-                </div>
-                <a href="transdash.html" class="project-link"> View Project → </a>
+              <div class="project-tech">
+                <span class="tech-tag">Tableau</span>
+                <span class="tech-tag">SQL</span>
+                <span class="tech-tag">ETL</span>
+                <span class="tech-tag">API Integration</span>
               </div>
+              <a href="transdash_detail.html" class="project-link">
+                View Project →
+              </a>
             </div>
           </div>
 
           <div class="project-card">
-            <div class="project-image">
-              <img src="images/agency_tracker.png" alt="Agency Measures Tracker" style="width: 100%; height: 100%; object-fit: cover" />
-            </div>
+            <div class="project-image">⚙️</div>
             <div class="project-content">
               <h3 class="project-title">Agency Measures Tracker</h3>
               <p class="project-description">
@@ -964,15 +912,15 @@
                 syncs CSV data, processes metrics, and generates weekly
                 performance reports. Reduced manual reporting time by 75%.
               </p>
-              <div class="project-footer">
-                <div class="project-tech">
-                  <span class="tech-tag">Google Apps Script</span>
-                  <span class="tech-tag">JavaScript</span>
-                  <span class="tech-tag">CSV Processing</span>
-                  <span class="tech-tag">Automation</span>
-                </div>
-                <a href="agency_tracker.html" class="project-link"> View Project → </a>
+              <div class="project-tech">
+                <span class="tech-tag">Google Apps Script</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">CSV Processing</span>
+                <span class="tech-tag">Automation</span>
               </div>
+              <a href="agency_tracker.html" class="project-link">
+                View Project →
+              </a>
             </div>
           </div>
 
@@ -986,8 +934,7 @@
                 modeling, trend analysis, and interactive Tableau dashboards for
                 stakeholder presentations.
               </p>
-              <div class="project-footer">
-                <div class="project-tech">
+              <div class="project-tech">
                 <span class="tech-tag">Python</span>
                 <span class="tech-tag">Pandas</span>
                 <span class="tech-tag">Tableau</span>
@@ -1040,28 +987,36 @@
             process automation, I'd love to hear from you.
           </p>
           <div class="contact-buttons">
-            <a href="mailto:jonathon@example.com" class="btn btn-primary"
+            <a href="mailto:jonra.harris@gmail.com" class="btn btn-primary"
               >Send Email</a
             >
-            <a href="#" class="btn btn-secondary">Download Resume</a>
+            <a
+              href="/resume/Jonathon Harris Resume.pdf"
+              download
+              class="btn btn-secondary"
+              >Download Resume</a
+            >
           </div>
           <div class="social-links">
             <a
-              href="https://github.com"
+              href="https://github.com/jraharris89"
+              target="_blank"
               class="social-link"
               aria-label="GitHub"
             >
               <span>GH</span>
             </a>
             <a
-              href="https://public.tableau.com"
+              href="https://public.tableau.com/app/profile/jonathon.harris3137/vizzes"
+              target="_blank"
               class="social-link"
               aria-label="Tableau Public"
             >
               <span>TB</span>
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://linkedin.com/in/jonathon-harris-pdx"
+              target="_blank"
               class="social-link"
               aria-label="LinkedIn"
             >
@@ -1079,89 +1034,78 @@
     </footer>
 
     <script>
-      // === Improved Slot Machine Animation ===
+      // === NEW H1 Animation Script ===
       document.addEventListener("DOMContentLoaded", () => {
-        // Configurable options
-        const REEL_SYMBOLS =
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZ#<>!*@+$%^&~abcdefghijklmnopqrstuvwxyz0123456789";
-        const REEL_LENGTH = 15; // How many symbols to spin through (higher = longer spin)
-        const STAGGER_DELAY = 60; // ms delay per character
-        const START_DELAY = 1000; // ms delay before starting the whole animation
-        const ANIMATION_DURATION = 1500; // ms (must match CSS)
+        const h1Element = document.getElementById("hero-title");
+        if (!h1Element) return;
 
-        const h1 = document.querySelector(".slot-machine");
-        if (!h1) return;
+        const alphabet =
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&"; // Include needed chars
+        const hiddenText = h1Element.textContent.trim(); // Get the original text
+        h1Element.textContent = ""; // Clear it initially
 
-        const originalText = h1.innerText;
-        h1.innerHTML = ""; // Clear the H1
-        let charCount = 0;
-        let totalDelay = 0;
+        let previousTimestamp;
+        let elapsedSeconds = 0;
+        let secondsPerCharacterReveal = 0.08; // Adjust speed (smaller = faster)
+        let randomChangeCounter = 0;
+        let framesToSkip = 2; // Change random letters every X frames (higher = slower changes)
 
-        originalText.split("").forEach((char) => {
-          const charContainer = document.createElement("span");
+        const animationLoop = (currentTimestamp) => {
+          if (previousTimestamp === undefined) {
+            previousTimestamp = currentTimestamp; // Initialize on first frame
+          }
+          let secondsSinceLastFrame =
+            (currentTimestamp - previousTimestamp) / 1000;
+          previousTimestamp = currentTimestamp;
+          elapsedSeconds += secondsSinceLastFrame;
+          const charactersToReveal = elapsedSeconds / secondsPerCharacterReveal;
+          if (randomChangeCounter > 0) {
+            randomChangeCounter -= 1;
+          } else {
+            randomChangeCounter = framesToSkip;
+            let animatedHTML = ""; // Changed from animatedText
+            let allRevealed = true;
 
-          // Handle spaces
-          if (char === " ") {
-            charContainer.className = "slot-space";
-            charContainer.innerHTML = "&nbsp;"; // Use a non-breaking space
-            h1.appendChild(charContainer);
-            return; // Don't create a reel for spaces
+            for (let i = 0; i < hiddenText.length; i++) {
+              let character = "";
+              let isRevealed = i < charactersToReveal;
+
+              if (isRevealed) {
+                character = hiddenText[i];
+              } else {
+                if (hiddenText[i] === " ") {
+                  character = " ";
+                } else {
+                  character =
+                    alphabet[Math.floor(Math.random() * alphabet.length)];
+                  allRevealed = false;
+                }
+              }
+
+              // Wrap each character in a span with conditional blur class
+              if (hiddenText[i] === " ") {
+                animatedHTML += " "; // Don't wrap spaces
+              } else {
+                const blurClass = isRevealed ? "" : " shifting";
+                animatedHTML += `<span class="char${blurClass}">${character}</span>`;
+              }
+            }
+
+            h1Element.innerHTML = animatedHTML; // Changed from textContent
+
+            if (allRevealed) {
+              return;
+            }
           }
 
-          charContainer.className = "slot-char";
+          // Continue animation if not all characters are revealed
+          window.requestAnimationFrame(animationLoop);
+        };
 
-          // 1. Add the invisible final char (this sets the container's width)
-          const finalChar = document.createElement("span");
-          finalChar.className = "slot-char-final";
-          finalChar.textContent = char;
-          charContainer.appendChild(finalChar);
-
-          // 2. Add the reel
-          const reel = document.createElement("span");
-          reel.className = "slot-reel";
-
-          // Add random symbols to the reel
-          for (let i = 0; i < REEL_LENGTH; i++) {
-            const symbol = document.createElement("span");
-            symbol.textContent =
-              REEL_SYMBOLS[Math.floor(Math.random() * REEL_SYMBOLS.length)];
-            reel.appendChild(symbol);
-          }
-
-          // Add the *actual* final character at the end of the reel
-          const finalReelChar = document.createElement("span");
-          finalReelChar.textContent = char;
-          reel.appendChild(finalReelChar);
-
-          // 3. Set custom properties for animation
-          // The final transform is (number of symbols) * (height of one char)
-          const finalTransform = `calc(-${REEL_LENGTH} * 1.2em)`;
-          reel.style.setProperty("--final-transform", finalTransform);
-
-          // Stagger the animation start
-          const delay = charCount * STAGGER_DELAY;
-          reel.style.transitionDelay = `${delay}ms`;
-          totalDelay = delay; // Keep track of the last animation's delay
-
-          charContainer.appendChild(reel);
-          h1.appendChild(charContainer);
-          charCount++;
-        });
-
-        // Trigger the animation after the specified delay
-        setTimeout(() => {
-          h1.classList.add("animate"); // Adds blur
-          h1.querySelectorAll(".slot-reel").forEach((reel) => {
-            reel.classList.add("animate");
-          });
-
-          // Add a 'settled' class after all animations are done
-          setTimeout(() => {
-            h1.classList.remove("animate");
-            h1.classList.add("settled");
-          }, totalDelay + ANIMATION_DURATION); // Total time = last delay + anim duration
-        }, START_DELAY);
+        // Start the animation loop
+        window.requestAnimationFrame(animationLoop);
       });
+      // === END NEW H1 Script ===
 
       // === Scroll Animation for Data to Vision Section ===
       const fromToSection = document.getElementById("from-to");
@@ -1171,85 +1115,94 @@
       const toWord = document.getElementById("to");
 
       function updateAnimation() {
+        if (!fromToSection) return; // Exit if element not found
+
         const rect = fromToSection.getBoundingClientRect();
         const sectionHeight = fromToSection.offsetHeight;
         const viewportHeight = window.innerHeight;
 
+        // Prevent division by zero if sectionHeight equals viewportHeight
+        const scrollableHeight = sectionHeight - viewportHeight;
+        if (scrollableHeight <= 0) return; // Not enough height to scroll through
+
         const scrollProgress = Math.max(
           0,
-          Math.min(1, -rect.top / (sectionHeight - viewportHeight))
+          Math.min(1, -rect.top / scrollableHeight)
         );
 
-        // Phase 1 (0-0.2): Sketches fade in
-        if (scrollProgress < 0.2) {
-          const phase1 = scrollProgress / 0.2;
-          sketches.style.opacity = phase1;
-          sketches.style.transform = `translate(-50%, -50%) scale(${
-            0.95 + phase1 * 0.05
-          })`;
-          sketches.style.filter = "blur(0px)";
-        } else {
-          sketches.style.opacity = 1;
-          sketches.style.transform = "translate(-50%, -50%) scale(1)";
-        }
+        // Make sure elements exist before styling
+        if (sketches && fromWord && dashboards && toWord) {
+          // Phase 1 (0-0.2): Sketches fade in
+          if (scrollProgress < 0.2) {
+            const phase1 = scrollProgress / 0.2;
+            sketches.style.opacity = phase1;
+            sketches.style.transform = `translate(-50%, -50%) scale(${
+              0.95 + phase1 * 0.05
+            })`;
+            sketches.style.filter = "blur(0px)";
+          } else {
+            sketches.style.opacity = 1;
+            sketches.style.transform = "translate(-50%, -50%) scale(1)";
+          }
 
-        // Phase 2 (0.2-0.35): "RAW DATA" fades in, sketches blur
-        if (scrollProgress < 0.2) {
-          fromWord.style.opacity = 0;
-        } else if (scrollProgress < 0.35) {
-          const phase2 = (scrollProgress - 0.2) / 0.15;
-          fromWord.style.opacity = phase2;
-          fromWord.style.transform = `translate(-50%, -50%) scale(${
-            0.8 + phase2 * 0.2
-          })`;
-          sketches.style.filter = `blur(${phase2 * 8}px)`;
-        } else {
-          fromWord.style.opacity = 1;
-          fromWord.style.transform = "translate(-50%, -50%) scale(1)";
-          sketches.style.filter = "blur(8px)";
-        }
+          // Phase 2 (0.2-0.35): "RAW DATA" fades in, sketches blur
+          if (scrollProgress < 0.2) {
+            fromWord.style.opacity = 0;
+          } else if (scrollProgress < 0.35) {
+            const phase2 = (scrollProgress - 0.2) / 0.15;
+            fromWord.style.opacity = phase2;
+            fromWord.style.transform = `translate(-50%, -50%) scale(${
+              0.8 + phase2 * 0.2
+            })`;
+            sketches.style.filter = `blur(${phase2 * 8}px)`;
+          } else {
+            fromWord.style.opacity = 1;
+            fromWord.style.transform = "translate(-50%, -50%) scale(1)";
+            sketches.style.filter = "blur(8px)";
+          }
 
-        // Phase 3 (0.5-0.65): "RAW DATA" and sketches fade out
-        if (scrollProgress < 0.5) {
-          // Keep visible
-        } else if (scrollProgress < 0.65) {
-          const phase3 = (scrollProgress - 0.5) / 0.15;
-          fromWord.style.opacity = 1 - phase3;
-          sketches.style.opacity = 1 - phase3;
-        } else {
-          fromWord.style.opacity = 0;
-          sketches.style.opacity = 0;
-        }
+          // Phase 3 (0.5-0.65): "RAW DATA" and sketches fade out
+          if (scrollProgress < 0.5) {
+            // Keep visible
+          } else if (scrollProgress < 0.65) {
+            const phase3 = (scrollProgress - 0.5) / 0.15;
+            fromWord.style.opacity = 1 - phase3;
+            sketches.style.opacity = 1 - phase3;
+          } else {
+            fromWord.style.opacity = 0;
+            sketches.style.opacity = 0;
+          }
 
-        // Phase 4 (0.65-0.8): Dashboards fade in
-        if (scrollProgress < 0.65) {
-          dashboards.style.opacity = 0;
-        } else if (scrollProgress < 0.8) {
-          const phase4 = (scrollProgress - 0.65) / 0.15;
-          dashboards.style.opacity = phase4;
-          dashboards.style.transform = `translate(-50%, -50%) scale(${
-            0.95 + phase4 * 0.05
-          })`;
-          dashboards.style.filter = "blur(0px)";
-        } else {
-          dashboards.style.opacity = 1;
-          dashboards.style.transform = "translate(-50%, -50%) scale(1)";
-        }
+          // Phase 4 (0.65-0.8): Dashboards fade in
+          if (scrollProgress < 0.65) {
+            dashboards.style.opacity = 0;
+          } else if (scrollProgress < 0.8) {
+            const phase4 = (scrollProgress - 0.65) / 0.15;
+            dashboards.style.opacity = phase4;
+            dashboards.style.transform = `translate(-50%, -50%) scale(${
+              0.95 + phase4 * 0.05
+            })`;
+            dashboards.style.filter = "blur(0px)";
+          } else {
+            dashboards.style.opacity = 1;
+            dashboards.style.transform = "translate(-50%, -50%) scale(1)";
+          }
 
-        // Phase 5 (0.8-0.95): "CLEAR INSIGHTS" fades in, dashboards blur
-        if (scrollProgress < 0.8) {
-          toWord.style.opacity = 0;
-        } else if (scrollProgress < 0.95) {
-          const phase5 = (scrollProgress - 0.8) / 0.15;
-          toWord.style.opacity = phase5;
-          toWord.style.transform = `translate(-50%, -50%) scale(${
-            0.8 + phase5 * 0.2
-          })`;
-          dashboards.style.filter = `blur(${phase5 * 8}px)`;
-        } else {
-          toWord.style.opacity = 1;
-          toWord.style.transform = "translate(-50%, -50%) scale(1)";
-          dashboards.style.filter = "blur(8px)";
+          // Phase 5 (0.8-0.95): "CLEAR INSIGHTS" fades in, dashboards blur
+          if (scrollProgress < 0.8) {
+            toWord.style.opacity = 0;
+          } else if (scrollProgress < 0.95) {
+            const phase5 = (scrollProgress - 0.8) / 0.15;
+            toWord.style.opacity = phase5;
+            toWord.style.transform = `translate(-50%, -50%) scale(${
+              0.8 + phase5 * 0.2
+            })`;
+            dashboards.style.filter = `blur(${phase5 * 8}px)`;
+          } else {
+            toWord.style.opacity = 1;
+            toWord.style.transform = "translate(-50%, -50%) scale(1)";
+            dashboards.style.filter = "blur(8px)";
+          }
         }
       }
 
@@ -1275,17 +1228,19 @@
         stats.forEach((stat) => {
           const target = parseInt(stat.getAttribute("data-target"));
           const suffix = stat.getAttribute("data-suffix") || "";
-          const duration = 2000;
-          const increment = target / (duration / 16);
-          let current = 0;
+          const duration = 2000; // ms
+          let startTimestamp = null;
 
-          const updateCount = () => {
-            current += increment;
-            if (current < target) {
-              stat.textContent = Math.floor(current) + suffix;
-              requestAnimationFrame(updateCount);
-            } else {
-              stat.textContent = target + suffix;
+          const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min(
+              (timestamp - startTimestamp) / duration,
+              1
+            );
+            const current = Math.floor(progress * target);
+            stat.textContent = current + suffix;
+            if (progress < 1) {
+              window.requestAnimationFrame(step);
             }
           };
 
@@ -1293,7 +1248,7 @@
             (entries) => {
               entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                  updateCount();
+                  window.requestAnimationFrame(step); // Start animation
                   observer.unobserve(entry.target);
                 }
               });
@@ -1305,49 +1260,30 @@
         });
       };
 
-      document.addEventListener("DOMContentLoaded", animateStats);
+      document.addEventListener("DOMContentLoaded", animateStats); // Run after DOM load
 
-      // === Smooth Scroll Navigation ===
+      // === Instant Jump Navigation ===
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
-          // Instant jump for hero-buttons and nav-links
-          if (
-            this.id === "jump-projects" ||
-            this.id === "jump-contact" ||
-            this.classList.contains("nav-jump")
-          ) {
-            e.preventDefault();
-            const html = document.documentElement;
-            const prevScroll = html.style.scrollBehavior;
-            html.style.scrollBehavior = "auto";
-            const hash = this.getAttribute("href");
-            location.replace(hash);
-            setTimeout(() => {
-              // Offset for fixed navbar
-              const navbar = document.getElementById("navbar");
-              const section = document.querySelector(hash);
-              if (navbar && section) {
-                const navHeight = navbar.offsetHeight;
-                const sectionTop =
-                  section.getBoundingClientRect().top + window.pageYOffset;
-                window.scrollTo({
-                  top: sectionTop - navHeight,
-                  behavior: "auto",
-                });
-              }
-              html.style.scrollBehavior = prevScroll || "smooth";
-            }, 100);
-            document.getElementById("navLinks").classList.remove("active");
-            return;
-          }
           e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
+          const targetId = this.getAttribute("href");
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            // Close mobile menu if open
+            document.getElementById("navLinks")?.classList.remove("active");
+
+            // Calculate offset for fixed navbar
+            const navbarHeight =
+              document.getElementById("navbar")?.offsetHeight || 60;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition =
+              elementPosition + window.pageYOffset - navbarHeight;
+
+            // Jump to position with offset
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "auto", // instant jump
             });
-            document.getElementById("navLinks").classList.remove("active");
           }
         });
       });
@@ -1356,43 +1292,48 @@
       const menuToggle = document.getElementById("menuToggle");
       const navLinks = document.getElementById("navLinks");
 
-      menuToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-      });
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener("click", () => {
+          navLinks.classList.toggle("active");
+        });
 
-      document.addEventListener("click", (e) => {
-        if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-          navLinks.classList.remove("active");
-        }
-      });
+        // Close menu when clicking outside
+        document.addEventListener("click", (e) => {
+          if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+            navLinks.classList.remove("active");
+          }
+        });
+      }
 
       // === Navbar Scroll Effect ===
       const navbar = document.getElementById("navbar");
-      let lastScroll = 0;
+      if (navbar) {
+        let lastScroll = 0;
+        window.addEventListener("scroll", () => {
+          const currentScroll = window.pageYOffset;
 
-      window.addEventListener("scroll", () => {
-        const currentScroll = window.pageYOffset;
+          if (currentScroll > 50) {
+            navbar.classList.add("scrolled");
+          } else {
+            navbar.classList.remove("scrolled");
+          }
 
-        if (currentScroll > 50) {
-          navbar.classList.add("scrolled");
-        } else {
-          navbar.classList.remove("scrolled");
-        }
+          lastScroll = currentScroll;
+        });
+      }
 
-        lastScroll = currentScroll;
-      });
-
-      // === Intersection Observer for Animations ===
+      // === Intersection Observer for Section Animations ===
       const observerOptions = {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px",
       };
 
-      const observer = new IntersectionObserver((entries) => {
+      const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.style.opacity = "1";
             entry.target.style.transform = "translateY(0)";
+            sectionObserver.unobserve(entry.target); // Animate only once
           }
         });
       }, observerOptions);
@@ -1400,25 +1341,29 @@
       document
         .querySelectorAll("section:not(#from-to), .project-card")
         .forEach((el) => {
-          observer.observe(el);
+          sectionObserver.observe(el);
         });
 
-      // === Active Navigation Link ===
+      // === Active Navigation Link on Scroll ===
       const sections = document.querySelectorAll("section[id]");
+      const navLinksAnchors = document.querySelectorAll(".nav-links a");
 
       window.addEventListener("scroll", () => {
         let current = "";
+        const navbarHeight = navbar?.offsetHeight || 60; // Get navbar height
+
         sections.forEach((section) => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          if (pageYOffset >= sectionTop - 200) {
+          const sectionTop = section.offsetTop - navbarHeight - 50; // Adjust for navbar and offset
+          if (pageYOffset >= sectionTop) {
             current = section.getAttribute("id");
           }
         });
 
-        document.querySelectorAll(".nav-links a").forEach((link) => {
+        navLinksAnchors.forEach((link) => {
           link.classList.remove("active");
-          if (link.getAttribute("href").slice(1) === current) {
+          // Check if href exists and is not just '#'
+          const href = link.getAttribute("href");
+          if (href && href.length > 1 && href.slice(1) === current) {
             link.classList.add("active");
           }
         });
@@ -1429,12 +1374,17 @@
         const loader = document.getElementById("loading");
         if (loader) {
           setTimeout(() => {
-            loader.classList.remove("active");
-          }, 100);
+            loader.style.opacity = "0"; // Fade out
+            setTimeout(() => (loader.style.display = "none"), 300); // Then hide
+          }, 100); // Slight delay
         }
 
-        document.querySelector(".hero").style.opacity = "1";
-        document.querySelector(".hero").style.transform = "translateY(0)";
+        // Trigger hero fade in manually if observer doesn't catch it immediately
+        const heroSection = document.querySelector(".hero");
+        if (heroSection) {
+          heroSection.style.opacity = "1";
+          heroSection.style.transform = "translateY(0)";
+        }
       });
 
       // === Dynamic Year in Footer ===
