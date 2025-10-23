@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Agency Measures Tracker — Jonathon Harris</title>
+    <title>Agency Metrics Tracker — Jonathon Harris</title>
     <meta
       name="description"
       content="Automated reporting system that reduces manual data processing by 75% while tracking agency performance metrics through Google Apps Script."
@@ -29,20 +29,38 @@
     />
     <style>
       :root {
-        --text-primary: #1a1a1a;
-        --text-secondary: #666666;
-        --text-light: #999999;
-        --bg-primary: #ffffff;
-        --bg-secondary: #f8f9fa;
-        --bg-tertiary: #f0f2f5;
-        --accent: #4a5568;
-        --accent-hover: #2d3748;
-        --accent-light: #667eea;
-        --border: #e2e8f0;
-        --shadow: rgba(0, 0, 0, 0.08);
+        /* Color Palette - Based on Logo */
+        --text-primary: #2c3e3f;
+        --text-secondary: #5a6c6d;
+        --text-light: #8a9b9c;
+        --bg-primary: #f1efe8;
+        --bg-secondary: #ffffff;
+        --bg-tertiary: #e8e6df;
+        --accent: #f88916;
+        --accent-hover: #d97512;
+        --accent-secondary: #627363;
+        --accent-secondary-hover: #8fb091;
+        --border: #d4d2cb;
+        --shadow: rgba(44, 62, 63, 0.08);
+
+        /* Typography */
         --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
           sans-serif;
+        --font-code: "Source Code Pro", monospace; /* Font for animation */
+        --font-size-base: 16px;
+        --line-height: 1.6;
+
+        /* Spacing */
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 2rem;
+        --spacing-lg: 3rem;
+        --spacing-xl: 5rem;
+
+        /* Animation */
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
+
       * {
         margin: 0;
         padding: 0;
@@ -138,7 +156,7 @@
       .meta-icon {
         width: 20px;
         height: 20px;
-        color: var(--accent-light);
+        color: #3b82f6;
       }
       .tech-tags {
         display: flex;
@@ -390,30 +408,54 @@
       .section-title {
         margin-bottom: 1.5rem;
       }
+      .gist-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
       .gist-btn {
         flex: 1;
         padding: 1rem;
         border-radius: 8px;
-        border: 1px solid #e2e8f0;
-        background: #f8f9fa;
+        background: transparent;
+        color: var(--accent-secondary);
+        border: 1px solid var(--accent-secondary-hover);
+
         font-weight: 600;
         cursor: pointer;
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        transition: var(--transition);
       }
       .gist-btn:hover {
-        background: #e2e8f0;
-        color: var(--accent);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        border-color: var(--accent-secondary);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
       }
       .gist-btn:active {
-        background: #7dd38a;
-        color: var(--accent-hover);
+        border-color: var(--accent-secondary);
+        transform: translateY(0px);
       }
       .gist-btn.selected {
-        background: #a6c7a8;
-        color: var(--text-primary);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        background: var(--accent-secondary);
+        border-color: #9cc89e;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
+      .btn-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--accent-secondary);
+      }
+      .btn-description {
+        font-size: 0.875rem;
+        color: var(--text-light);
+        font-weight: 400;
+      }
+      .gist-btn.selected .btn-title,
+      .gist-btn.selected .btn-description {
+        color: white;
+      }
+
       @media (max-width: 1300px) {
         .dashboard-wrapper {
           max-width: 100%;
@@ -473,8 +515,8 @@
     <nav>
       <div class="nav-container">
         <a href="combined.html" class="back-button">
-          <span>←</span>
-          <span>Back to Portfolio</span>
+          <span style="color: var(--accent-secondary)">←</span>
+          <span style="color: var(--accent-secondary)">Back to Portfolio</span>
         </a>
         <img class="logo" src="images/isolated_logo(circle).png" alt="Logo" />
       </div>
@@ -616,72 +658,22 @@
           </p>
         </div>
         <div class="code-container">
-          <div
-            class="gist-buttons"
-            style="
-              display: flex;
-              justify-content: space-between;
-              gap: 1rem;
-              margin-bottom: 2rem;
-            "
-          >
-            <button
-              class="gist-btn"
-              data-gist="config"
-              style="
-                flex: 1;
-                padding: 1rem;
-                border-radius: 8px;
-                border: 1px solid #e2e8f0;
-                background: #f8f9fa;
-                font-weight: 600;
-                cursor: pointer;
-              "
-            >
-              <div style="font-weight: 600; margin-bottom: 0.5rem">
-                Configuration Hub
-              </div>
-              <div style="font-size: 0.875rem; color: #666; font-weight: 400">
+          <div class="gist-buttons">
+            <button class="gist-btn" data-gist="config">
+              <div class="btn-title">Configuration Hub</div>
+              <div class="btn-description">
                 Core settings, spreadsheet IDs, and fiscal year rules
               </div>
             </button>
-            <button
-              class="gist-btn"
-              data-gist="2"
-              style="
-                flex: 1;
-                padding: 1rem;
-                border-radius: 8px;
-                border: 1px solid #e2e8f0;
-                background: #f8f9fa;
-                font-weight: 600;
-                cursor: pointer;
-              "
-            >
-              <div style="font-weight: 600; margin-bottom: 0.5rem">
-                Quarterly Rollover Automation
-              </div>
-              <div style="font-size: 0.875rem; color: #666; font-weight: 400">
+            <button class="gist-btn" data-gist="2">
+              <div class="btn-title">Quarterly Rollover Automation</div>
+              <div class="btn-description">
                 Dashboard duplication and smart data migration
               </div>
             </button>
-            <button
-              class="gist-btn"
-              data-gist="3"
-              style="
-                flex: 1;
-                padding: 1rem;
-                border-radius: 8px;
-                border: 1px solid #e2e8f0;
-                background: #f8f9fa;
-                font-weight: 600;
-                cursor: pointer;
-              "
-            >
-              <div style="font-weight: 600; margin-bottom: 0.5rem">
-                Statistical Report Generator
-              </div>
-              <div style="font-size: 0.875rem; color: #666; font-weight: 400">
+            <button class="gist-btn" data-gist="3">
+              <div class="btn-title">Statistical Report Generator</div>
+              <div class="btn-description">
                 Trend analysis, benchmarking, and automated reporting
               </div>
             </button>
@@ -710,7 +702,7 @@
             config:
               "https://gist.github.com/jraharris89/f3d2efc43d8bf8cde1cb49cfb2cbb313.js",
             2: "https://gist.github.com/jraharris89/2a0e5e1e239dfca55cda72d99f8a7b26.js",
-            3: "https://gist.github.com/jraharris89/f2f5c9746ea55fcc07c3669a4c514da8.js",
+            3: "https://gist.github.com/jraharris89/b6de8d9b753564ea2fdfc396b8e60535.js",
           };
 
           const viewer = document.getElementById("gist-viewer");
@@ -840,7 +832,7 @@
               if (activeGistKey === clickedKey) {
                 // --- DESELECT LOGIC ---
                 activeGistKey = null; // Clear the active state
-                btn.style.background = "#f8f9fa"; // Reset this button's style
+                btn.style.background = ""; // Reset this button's style
                 btn.classList.remove("selected");
                 viewer.innerHTML = defaultViewerHTML; // Restore the default message
                 document.write = originalDocumentWrite; // Safety restore
@@ -852,10 +844,10 @@
                 // --- SELECT LOGIC (Original logic) ---
                 activeGistKey = clickedKey; // Set the new active state
                 buttons.forEach((b) => {
-                  b.style.background = "#f8f9fa"; // Reset all
+                  b.style.background = ""; // Reset all
                   b.classList.remove("selected");
                 }); // Reset all
-                btn.style.background = "#a6c7a8"; // Highlight this one
+                btn.style.background = ""; // Let CSS handle it
                 btn.classList.add("selected");
                 loadGist(clickedKey); // Load the Gist
               }
@@ -873,7 +865,7 @@
         <div class="detail-card">
           <h3>Project Overview</h3>
           <p>
-            Agency Measures Tracker is an automated reporting system that syncs
+            Agency Metric Tracker is an automated reporting system that syncs
             CSV data, processes agency metrics, and generates weekly performance
             reports. Built with Google Apps Script and JavaScript, it
             streamlines manual workflows and ensures timely, accurate reporting.

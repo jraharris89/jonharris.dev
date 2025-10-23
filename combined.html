@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <title>Jonathon Harris — Data Analyst & Developer | Portland, OR</title>
+    <title>Jon Harris — Data Analyst & Developer</title>
     <meta
       name="description"
       content="Portland-based data analyst and developer specializing in dashboards, data automation, and analytics tools. Expert in SQL, Python, Tableau, and Power BI."
@@ -56,6 +56,13 @@
       href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <style>
       /* === CSS Reset & Base Styles === */
       * {
@@ -63,19 +70,76 @@
         padding: 0;
         box-sizing: border-box;
       }
+      /* Profile picture styles */
+      .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .about-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+      }
+      .about-header h2 {
+        margin-bottom: 0; /* Remove default margin from h2 */
+      }
+      .profile-pic-wrapper {
+        width: 100px; /* Adjusted size */
+        height: 100px; /* Adjusted size */
+        border-radius: 50%;
+        overflow: hidden;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        position: relative;
+        flex-shrink: 0;
+        margin-left: var(--spacing-md);
+      }
+      .profile-pic-wrapper:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 24px rgba(44, 62, 63, 0.12);
+      }
+      .profile-pic {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .about-text-content {
+        max-width: 100%; /* Allow text to take full width */
+      }
+
+      @media (max-width: 768px) {
+        .about-header {
+          flex-direction: column;
+          text-align: center;
+        }
+        .profile-pic-wrapper {
+          width: 120px;
+          height: 120px;
+        }
+      }
 
       :root {
-        /* Color Palette - Muted & Professional */
-        --text-primary: #1a1a1a;
-        --text-secondary: #666666;
-        --text-light: #999999;
-        --bg-primary: #ffffff;
-        --bg-secondary: #f8f9fa;
-        --bg-tertiary: #f0f2f5;
-        --accent: #4a5568;
-        --accent-hover: #2d3748;
-        --border: #e2e8f0;
-        --shadow: rgba(0, 0, 0, 0.08);
+        /* Color Palette - Based on Logo */
+        --text-primary: #2c3e3f;
+        --text-secondary: #5a6c6d;
+        --text-light: #8a9b9c;
+        --bg-primary: #f1efe8;
+        --bg-secondary: #ffffff;
+        --bg-tertiary: #e8e6df;
+        --accent: #f88916;
+        --accent-hover: #d97512;
+        --accent-secondary: #627363;
+        --accent-secondary-hover: #8fb091;
+        --light-green: #c9f0cc;
+
+        --border: #d4d2cb;
+        --shadow: rgba(44, 62, 63, 0.08);
 
         /* Typography */
         --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -158,13 +222,13 @@
       }
 
       a {
-        color: var(--accent);
+        color: var(--accent-secondary);
         text-decoration: none;
         transition: var(--transition);
       }
 
       a:hover {
-        color: var(--accent-hover);
+        color: var(--accent-secondary-hover);
       }
 
       /* === Container & Layout === */
@@ -320,7 +384,7 @@
       .stat-number {
         font-size: 2rem;
         font-weight: 700;
-        color: var(--accent);
+        color: var(--accent-secondary);
         margin-bottom: 4px;
       }
 
@@ -387,12 +451,14 @@
       }
 
       .btn-primary {
-        background: var(--accent);
+        background: var(--accent-secondary);
         color: white;
+        border-color: var(--text-light);
+        border: 1px solid transparent;
       }
 
       .btn-primary:hover {
-        background: var(--accent-hover);
+        background: var(--accent-secondary-hover);
         color: white;
         transform: translateY(-2px);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -400,12 +466,12 @@
 
       .btn-secondary {
         background: transparent;
-        color: var(--accent);
-        border-color: var(--accent);
+        color: var(--accent-secondary);
+        border-color: var(--accent-secondary);
       }
 
       .btn-secondary:hover {
-        background: var(--accent);
+        background: var(--accent-secondary-hover);
         color: white;
         transform: translateY(-2px);
       }
@@ -537,6 +603,7 @@
         display: flex;
         flex-direction: column;
         flex: 1;
+        border-radius: 12px 12px 0 0;
       }
 
       .project-footer {
@@ -570,7 +637,8 @@
 
       .tech-tag {
         padding: 4px 12px;
-        background: var(--bg-tertiary);
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
         border-radius: 20px;
         font-size: 0.875rem;
         color: var(--text-secondary);
@@ -582,7 +650,7 @@
         gap: var(--spacing-xs);
         margin-top: var(--spacing-sm);
         font-weight: 500;
-        color: var(--accent);
+        color: var(--accent-secondary);
       }
 
       .project-link:hover {
@@ -591,29 +659,30 @@
 
       /* === About Section === */
       .about {
+        padding-top: var(
+          --spacing-lg
+        ); /* Reduced top padding to bring section up */
         animation-delay: 0.4s;
-      }
-
-      .about-content {
-        max-width: 800px;
-        margin: 0 auto;
-        text-align: center;
       }
 
       .about-text {
         font-size: 1.125rem;
         line-height: 1.8;
-        margin-bottom: var(--spacing-md);
+        margin-bottom: var(--spacing-sm); /* Consistent paragraph spacing */
       }
 
       .skills-container {
         display: flex;
         flex-wrap: wrap;
         gap: var(--spacing-xs);
-        justify-content: center;
-        margin-top: var(--spacing-md);
+        justify-content: flex-start; /* Align to start */
+        margin-top: var(--spacing-lg); /* Increased space above skill badges */
       }
-
+      @media (max-width: 768px) {
+        .skills-container {
+          justify-content: center; /* Center on mobile */
+        }
+      }
       .skill-badge {
         padding: 8px 16px;
         background: var(--bg-secondary);
@@ -624,9 +693,9 @@
       }
 
       .skill-badge:hover {
-        background: var(--accent);
+        background: var(--accent-secondary);
         color: white;
-        border-color: var(--accent);
+        border-color: var(--accent-secondary);
         transform: translateY(-2px);
       }
 
@@ -671,9 +740,9 @@
       }
 
       .social-link:hover {
-        background: var(--accent);
+        background: var(--accent-secondary);
         color: white;
-        border-color: var(--accent);
+        border-color: var(--accent-secondary);
         transform: translateY(-3px);
       }
 
@@ -774,10 +843,6 @@
         #from {
           display: none;
         }
-        /* Disable text animation if user prefers reduced motion */
-        #hero-title {
-          /* You might need JS to check this and skip animation */
-        }
       }
 
       /* === Loading State === */
@@ -787,7 +852,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: white;
+        background: var(--bg-primary);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -801,11 +866,26 @@
         opacity: 1;
         pointer-events: all;
       }
+
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 4px solid var(--border);
+        border-top-color: var(--accent-secondary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
   <body>
     <div class="loading" id="loading">
-      <div class="loader">Loading...</div>
+      <div class="loader"></div>
     </div>
 
     <nav id="navbar">
@@ -921,11 +1001,11 @@
             <div class="project-image">
               <img
                 src="images/Agency_tracker.jpg"
-                alt="Agency Measures Tracker screenshot"
+                alt="Agency Metric Tracker screenshot"
               />
             </div>
             <div class="project-content">
-              <h3 class="project-title">Agency Measures Tracker</h3>
+              <h3 class="project-title">Agency Metric Tracker</h3>
               <p class="project-description">
                 Automated reporting system built with Google Apps Script that
                 syncs CSV data, processes metrics, and generates weekly
@@ -969,18 +1049,31 @@
     <section class="about" id="about">
       <div class="container">
         <div class="about-content">
-          <h2>About Me</h2>
-          <p class="about-text">
-            I'm a Portland-based data analyst with 3 years of experience
-            building performance dashboards, automating workflows, and analyzing
-            transit metrics. My work focuses on transforming complex datasets
-            into actionable insights that drive organizational decision-making.
-          </p>
-          <p class="about-text">
-            With expertise spanning data engineering, visualization, and
-            statistical analysis, I specialize in creating end-to-end solutions
-            that bridge the gap between raw data and strategic action.
-          </p>
+          <div class="about-header">
+            <h2>About Me</h2>
+            <div class="profile-pic-wrapper" aria-hidden="true">
+              <img
+                src="images/profile_pic.jpg"
+                alt="Jon Harris"
+                class="profile-pic"
+              />
+            </div>
+          </div>
+          <div class="about-text-content">
+            <p class="about-text">
+              I'm a Portland-based data analyst with over 3 years of experience
+              building performance dashboards, automating workflows, and
+              analyzing transit metrics. My work focuses on transforming complex
+              datasets into actionable insights that drive organizational
+              decision-making.
+            </p>
+            <p class="about-text">
+              With expertise spanning data engineering, visualization, and
+              statistical analysis, I specialize in creating end-to-end
+              solutions that bridge the gap between raw data and strategic
+              action.
+            </p>
+          </div>
           <div class="skills-container">
             <span class="skill-badge">SQL</span>
             <span class="skill-badge">Python</span>
@@ -1010,7 +1103,7 @@
               >Send Email</a
             >
             <a
-              href="/resume/Jonathon Harris Resume.pdf"
+              href="/resume/Jonathon_Harris_DataEngineer.pdf"
               download
               class="btn btn-secondary"
               >Download Resume</a
@@ -1023,7 +1116,7 @@
               class="social-link"
               aria-label="GitHub"
             >
-              <span>GH</span>
+              <i class="fab fa-github"></i>
             </a>
             <a
               href="https://public.tableau.com/app/profile/jonathon.harris3137/vizzes"
@@ -1031,15 +1124,15 @@
               class="social-link"
               aria-label="Tableau Public"
             >
-              <span>TB</span>
+              <i class="fas fa-chart-bar"></i>
             </a>
             <a
-              href="https://linkedin.com/in/jonathon-harris-pdx"
+              href="https://linkedin.com/in/jon-harris001/"
               target="_blank"
               class="social-link"
               aria-label="LinkedIn"
             >
-              <span>LI</span>
+              <i class="fab fa-linkedin-in"></i>
             </a>
           </div>
         </div>
