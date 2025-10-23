@@ -39,11 +39,12 @@
     />
     <meta name="twitter:image" content="/images/og-preview.jpg" />
 
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>📊</text></svg>"
-    />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="images/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -519,6 +520,16 @@
         justify-content: center;
         font-size: 3rem;
         color: white;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Ensure any img inside the project-image fills the area and is cropped instead of overflowing */
+      .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
       }
 
       .project-content {
@@ -880,11 +891,14 @@
         <h2>Featured Projects</h2>
         <div class="projects-grid">
           <div class="project-card">
-            <div class="project-image">📊</div>
+            <div class="project-image">
+              <img
+                src="images/transdash_dashboard.png"
+                alt="Agency Performance Dashboard"
+              />
+            </div>
             <div class="project-content">
-              <h3 class="project-title">
-                TransDASH National Performance Dashboard
-              </h3>
+              <h3 class="project-title">Agency Performance Dashboard</h3>
               <p class="project-description">
                 Interactive Tableau visualization platform analyzing performance
                 metrics for U.S. transit agencies. Features real-time data
@@ -904,7 +918,12 @@
           </div>
 
           <div class="project-card">
-            <div class="project-image">⚙️</div>
+            <div class="project-image">
+              <img
+                src="images/Agency_tracker.jpg"
+                alt="Agency Measures Tracker screenshot"
+              />
+            </div>
             <div class="project-content">
               <h3 class="project-title">Agency Measures Tracker</h3>
               <p class="project-description">
