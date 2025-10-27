@@ -67,7 +67,8 @@ export default function Portfolio() {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top <= 150 && rect.bottom >= 150;
+          // Adjusted detection for better mobile fit
+          return rect.top <= 100 && rect.bottom >= 100;
         }
         return false;
       });
@@ -859,16 +860,17 @@ function generateAggregations(processedMetrics) {
     <div className="font-sans text-gray-100 bg-bg-primary">
       {/* Navigation */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out backdrop-blur-md bg-bg-primary/30 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out md:backdrop-blur-md ${
           scrollDirection === "down" && isScrolled
             ? "-translate-y-full"
             : "translate-y-0"
-        }`}
+        } bg-bg-primary/95 md:bg-bg-primary/30`}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-5 py-3 sm:py-5 flex justify-between items-center">
           <div
             onClick={() => scrollToSection("hero")}
-            className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-to-br from-olive-900 to-olive-950 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform overflow-hidden"
+            // UPDATED: w-10 sm:w-12 md:w-16 lg:w-20
+            className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-olive-900 to-olive-950 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform overflow-hidden"
           >
             <img
               src={LogoImage}
@@ -885,7 +887,7 @@ function generateAggregations(processedMetrics) {
           <ul
             className={`${
               isMenuOpen ? "flex" : "hidden"
-            } md:flex flex-col md:flex-row absolute md:relative top-[70px] sm:top-[80px] md:top-0 left-0 right-0 md:left-auto md:right-auto bg-bg-primary/98 md:bg-transparent gap-4 sm:gap-5 md:gap-10 list-none items-center p-4 sm:p-5 md:p-0 shadow-lg md:shadow-none`}
+            } md:flex flex-col md:flex-row absolute md:relative top-[56px] sm:top-[64px] md:top-0 left-0 right-0 md:left-auto md:right-auto bg-bg-primary/80 backdrop-blur-lg md:bg-transparent gap-4 sm:gap-5 md:gap-10 list-none items-center p-4 sm:p-5 md:p-0 shadow-lg md:shadow-none border-t border-olive-900/20 md:border-0`}
           >
             {["hero", "projects", "about", "contact"].map((section) => (
               <li key={section}>
@@ -915,35 +917,47 @@ function generateAggregations(processedMetrics) {
       {/* Hero Section */}
       <section
         id="hero"
-        className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-5 pattern-bg bg-bg-primary"
+        className="min-h-screen flex items-start md:items-center justify-center relative overflow-hidden px-4 sm:px-5 pt-32 md:pt-0 pattern-bg bg-bg-primary"
       >
         <ParticlesBackground />
         <div className="max-w-4xl text-center relative z-10 animate-in fade-in duration-800">
           {/* Typing Animation */}
-          <div className="mb-6 sm:mb-8">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold typing-cursor inline-block min-h-[50px] sm:min-h-[60px] gradient-text-animated">
+          <div className="mb-4 sm:mb-8">
+            <h1
+              // UPDATED: text-2xl base size, min-h-[] adjusted
+              className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold typing-cursor min-h-[80px] gradient-text-animated"
+            >
               {typedText}
             </h1>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 leading-tight text-text-muted px-4 sm:px-0">
+          <h2
+            // UPDATED: text-xl base size
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-8 leading-tight text-text-muted px-4 sm:px-0"
+          >
             Data Analyst & Developer
           </h2>
 
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-text-muted max-w-3xl mx-auto mb-10 sm:mb-12 font-normal px-4 sm:px-0">
+          <p
+            // UPDATED: text-sm base size
+            className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-text-muted max-w-3xl mx-auto mb-8 sm:mb-12 font-normal px-4 sm:px-0"
+          >
             I turn data into action—designing automated workflows, building
             dashboards and websites that surface critical insights, and
             analyzing trends that help teams make smarter, faster decisions.
           </p>
 
-          <div className="flex gap-6 sm:gap-10 md:gap-16 justify-center mb-10 sm:mb-12 flex-wrap px-4 sm:px-0">
+          <div className="flex gap-4 sm:gap-10 md:gap-16 justify-center mb-8 sm:mb-12 flex-wrap px-4 sm:px-0">
             {[
               { target: 3, suffix: "+", label: "Years Experience" },
               { target: 15, suffix: "+", label: "Dashboards Built" },
               { target: 20, suffix: "+", label: "Agencies Served" },
             ].map((stat, idx) => (
               <div key={idx} className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-text-secondary mb-2">
+                <div
+                  // UPDATED: text-3xl -> sm:text-4xl -> md:text-5xl
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-secondary mb-1"
+                >
                   <Counter target={stat.target} suffix={stat.suffix} />
                 </div>
                 <div className="text-xs sm:text-sm text-text-muted font-medium">
@@ -953,12 +967,13 @@ function generateAggregations(processedMetrics) {
             ))}
           </div>
 
-          <div className="flex gap-4 sm:gap-5 justify-center flex-wrap px-4 sm:px-0">
+          <div className="flex gap-3 sm:gap-5 justify-center flex-wrap px-4 sm:px-0">
             <a
               href="/resume/Jonathon_Harris_DataEngineer.pdf"
               download="Jonathon_Harris_DataEngineer.pdf"
               onClick={trackResumeDownload}
-              className="inline-flex items-center gap-2 px-7 sm:px-9 py-3.5 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary border-none rounded-xl text-sm sm:text-base font-semibold cursor-pointer transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)] no-underline"
+              // UPDATED: padding and text size
+              className="inline-flex items-center gap-2 px-6 sm:px-9 py-3 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)] no-underline"
             >
               <Download size={18} />
               Download Resume
@@ -967,7 +982,8 @@ function generateAggregations(processedMetrics) {
               <div className="relative rounded-xl p-[1px] bg-gradient-to-r from-olive-900 via-olive-300 to-olive-900 opacity-60 group-hover:opacity-100 transition-all duration-500 animate-gradient bg-[length:200%_200%] group-hover:shadow-[0_0_20px_rgba(212,222,149,0.4)]">
                 <button
                   onClick={() => scrollToSection("contact")}
-                  className="px-7 sm:px-9 py-3.5 sm:py-4 bg-bg-primary text-text-secondary border-none rounded-[11px] text-sm sm:text-base font-semibold cursor-pointer transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] w-full"
+                  // UPDATED: padding and text size
+                  className="px-6 sm:px-9 py-3 sm:py-4 bg-bg-primary text-text-secondary border-none rounded-[11px] text-sm font-semibold cursor-pointer transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] w-full"
                 >
                   Contact
                 </button>
@@ -978,7 +994,7 @@ function generateAggregations(processedMetrics) {
 
         <div
           onClick={() => scrollToSection("projects")}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer opacity-60 animate-bounce-slow"
+          className="absolute bottom-10 left-0 right-0 flex justify-center cursor-pointer opacity-60 animate-bounce-slow"
         >
           <ChevronDown size={32} className="text-text-secondary" />
         </div>
@@ -1008,7 +1024,7 @@ function generateAggregations(processedMetrics) {
                   <div className="relative h-full bg-bg-overlay rounded-3xl overflow-hidden">
                     {/* Image/Icon Section with Gradient Background */}
                     <div className="relative h-48 bg-gradient-to-br from-olive-900 via-olive-800 to-olive-900 flex items-center justify-center overflow-hidden">
-                      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+                      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1FileswLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
                       {project.image ? (
                         <div className="relative w-full h-full flex items-center justify-center">
                           {/* Container styling for non-hover state */}
