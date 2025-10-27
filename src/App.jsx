@@ -865,10 +865,10 @@ function generateAggregations(processedMetrics) {
             : "translate-y-0"
         }`}
       >
-        <div className="max-w-6xl mx-auto px-5 py-5 flex justify-between items-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-5 py-3 sm:py-5 flex justify-between items-center">
           <div
             onClick={() => scrollToSection("hero")}
-            className="w-20 h-20 bg-gradient-to-br from-olive-900 to-olive-950 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform overflow-hidden"
+            className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-to-br from-olive-900 to-olive-950 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform overflow-hidden"
           >
             <img
               src={LogoImage}
@@ -876,32 +876,30 @@ function generateAggregations(processedMetrics) {
               className="w-full h-full object-cover"
             />
           </div>
-
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden bg-transparent border-none text-text-secondary cursor-pointer p-2.5"
+            className="md:hidden bg-transparent border-none text-text-secondary cursor-pointer p-2"
           >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-
           <ul
             className={`${
               isMenuOpen ? "flex" : "hidden"
-            } md:flex flex-col md:flex-row absolute md:relative top-[90px] md:top-0 left-0 right-0 md:left-auto md:right-auto bg-bg-primary/98 md:bg-transparent gap-5 md:gap-10 list-none items-center p-5 md:p-0`}
+            } md:flex flex-col md:flex-row absolute md:relative top-[70px] sm:top-[80px] md:top-0 left-0 right-0 md:left-auto md:right-auto bg-bg-primary/98 md:bg-transparent gap-4 sm:gap-5 md:gap-10 list-none items-center p-4 sm:p-5 md:p-0 shadow-lg md:shadow-none`}
           >
             {["hero", "projects", "about", "contact"].map((section) => (
               <li key={section}>
                 <a
+                  href={`#${section}`}
                   onClick={(e) => {
                     e.preventDefault();
                     scrollToSection(section);
                   }}
-                  href={`#${section}`}
                   className={`${
                     activeSection === section
                       ? "text-text-secondary"
                       : "text-text-muted"
-                  } no-underline text-base font-medium capitalize transition-all duration-300 cursor-pointer relative py-2 hover:text-text-secondary hover:[text-shadow:0_0_4px_rgba(212,222,149,0.6)]`}
+                  } no-underline text-sm sm:text-base font-medium capitalize transition-all duration-300 cursor-pointer relative py-2 hover:text-text-secondary hover:[text-shadow:0_0_4px_rgba(212,222,149,0.6)]`}
                 >
                   {section === "hero" ? "Home" : section}
                   {activeSection === section && (
@@ -917,50 +915,50 @@ function generateAggregations(processedMetrics) {
       {/* Hero Section */}
       <section
         id="hero"
-        className="min-h-screen flex items-center justify-center relative overflow-hidden px-5 pattern-bg bg-bg-primary"
+        className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-5 pattern-bg bg-bg-primary"
       >
         <ParticlesBackground />
         <div className="max-w-4xl text-center relative z-10 animate-in fade-in duration-800">
           {/* Typing Animation */}
-          <div className="mb-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold typing-cursor inline-block min-h-[60px] gradient-text-animated">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold typing-cursor inline-block min-h-[50px] sm:min-h-[60px] gradient-text-animated">
               {typedText}
             </h1>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 leading-tight text-text-muted">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 leading-tight text-text-muted px-4 sm:px-0">
             Data Analyst & Developer
           </h2>
 
-          <p className="text-base sm:text-lg md:text-xl leading-relaxed text-text-muted max-w-3xl mx-auto mb-12 font-normal">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-text-muted max-w-3xl mx-auto mb-10 sm:mb-12 font-normal px-4 sm:px-0">
             I turn data into action—designing automated workflows, building
             dashboards and websites that surface critical insights, and
             analyzing trends that help teams make smarter, faster decisions.
           </p>
 
-          <div className="flex gap-10 md:gap-16 justify-center mb-12 flex-wrap">
+          <div className="flex gap-6 sm:gap-10 md:gap-16 justify-center mb-10 sm:mb-12 flex-wrap px-4 sm:px-0">
             {[
               { target: 3, suffix: "+", label: "Years Experience" },
               { target: 15, suffix: "+", label: "Dashboards Built" },
               { target: 20, suffix: "+", label: "Agencies Served" },
             ].map((stat, idx) => (
               <div key={idx} className="text-center">
-                <div className="text-5xl font-bold text-text-secondary mb-2">
+                <div className="text-4xl sm:text-5xl font-bold text-text-secondary mb-2">
                   <Counter target={stat.target} suffix={stat.suffix} />
                 </div>
-                <div className="text-sm text-text-muted font-medium">
+                <div className="text-xs sm:text-sm text-text-muted font-medium">
                   {stat.label}
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="flex gap-5 justify-center flex-wrap">
+          <div className="flex gap-4 sm:gap-5 justify-center flex-wrap px-4 sm:px-0">
             <a
               href="/resume/Jonathon_Harris_DataEngineer.pdf"
               download="Jonathon_Harris_DataEngineer.pdf"
               onClick={trackResumeDownload}
-              className="inline-flex items-center gap-2 px-9 py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary border-none rounded-xl text-base font-semibold cursor-pointer transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)] no-underline"
+              className="inline-flex items-center gap-2 px-7 sm:px-9 py-3.5 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary border-none rounded-xl text-sm sm:text-base font-semibold cursor-pointer transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)] no-underline"
             >
               <Download size={18} />
               Download Resume
@@ -969,7 +967,7 @@ function generateAggregations(processedMetrics) {
               <div className="relative rounded-xl p-[1px] bg-gradient-to-r from-olive-900 via-olive-300 to-olive-900 opacity-60 group-hover:opacity-100 transition-all duration-500 animate-gradient bg-[length:200%_200%] group-hover:shadow-[0_0_20px_rgba(212,222,149,0.4)]">
                 <button
                   onClick={() => scrollToSection("contact")}
-                  className="px-9 py-4 bg-bg-primary text-text-secondary border-none rounded-[11px] text-base font-semibold cursor-pointer transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] w-full"
+                  className="px-7 sm:px-9 py-3.5 sm:py-4 bg-bg-primary text-text-secondary border-none rounded-[11px] text-sm sm:text-base font-semibold cursor-pointer transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] w-full"
                 >
                   Contact
                 </button>
@@ -986,13 +984,18 @@ function generateAggregations(processedMetrics) {
         </div>
       </section>
 
-      {/* Transition Section */}
-      <ScatterOrganizeAnimationGSAP />
+      {/* Transition Section - Desktop Only */}
+      <div className="hidden md:block">
+        <ScatterOrganizeAnimationGSAP />
+      </div>
 
       {/* Projects Section */}
-      <section id="projects" className="py-24 px-5 bg-bg-primary">
+      <section
+        id="projects"
+        className="py-20 sm:py-24 px-4 sm:px-5 bg-bg-primary"
+      >
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-16 text-center gradient-text">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 sm:mb-16 text-center gradient-text">
             Featured Projects
           </h2>
 
@@ -1027,8 +1030,8 @@ function generateAggregations(processedMetrics) {
                     </div>
 
                     {/* Content Section */}
-                    <div className="p-6 flex flex-col h-[calc(100%-12rem)]">
-                      <h3 className="text-xl font-semibold mb-3 text-text-secondary group-hover:text-white group-hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] transition-all duration-300">
+                    <div className="p-5 sm:p-6 flex flex-col h-[calc(100%-12rem)]">
+                      <h3 className="text-lg sm:text-xl font-semibold mb-3 text-text-secondary group-hover:text-white group-hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] transition-all duration-300">
                         {project.title}
                       </h3>
                       <p className="text-text-muted text-sm leading-relaxed mb-4 flex-grow">
@@ -1040,7 +1043,7 @@ function generateAggregations(processedMetrics) {
                         {project.tech.map((tech, i) => (
                           <span
                             key={i}
-                            className="px-3 py-1 bg-olive-900/10 rounded-full text-xs text-text-secondary font-medium border border-olive-900/30"
+                            className="px-2.5 sm:px-3 py-1 bg-olive-900/10 rounded-full text-xs text-text-secondary font-medium border border-olive-900/30"
                           >
                             {tech}
                           </span>
@@ -1079,12 +1082,12 @@ function generateAggregations(processedMetrics) {
       {/* About Section */}
       <section
         id="about"
-        className="py-24 px-5 pattern-bg bg-gradient-to-b from-bg-primary to-bg-secondary"
+        className="py-20 sm:py-24 px-4 sm:px-5 pattern-bg bg-gradient-to-b from-bg-primary to-bg-secondary"
       >
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 gap-10 items-center">
             <div>
-              <h2 className="text-4xl sm:text-5xl font-bold mb-8 text-center gradient-text">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-center gradient-text">
                 About Me
               </h2>
               <div className="flex justify-center mb-8">
@@ -1096,20 +1099,20 @@ function generateAggregations(processedMetrics) {
                   />
                 </div>
               </div>
-              <p className="text-lg leading-relaxed text-text-muted mb-5">
+              <p className="text-base sm:text-lg leading-relaxed text-text-muted mb-5">
                 I'm a Portland-based data analyst with over 3 years of
                 experience solving complex operational challenges through data.
                 I build performance dashboards, automate workflows, and surface
                 insights that drive strategic decisions—specializing in systems
                 where timing, efficiency, and scale matter.
               </p>
-              <p className="text-lg leading-relaxed text-text-muted mb-8">
+              <p className="text-base sm:text-lg leading-relaxed text-text-muted mb-8">
                 I work across the full data stack—engineering pipelines,
                 analyzing patterns, and designing interactive visualizations—to
                 build solutions that turn technical complexity into clear,
                 actionable strategy.
               </p>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 {[
                   "SQL",
                   "Python",
@@ -1129,7 +1132,7 @@ function generateAggregations(processedMetrics) {
                 ].map((skill, idx) => (
                   <span
                     key={idx}
-                    className="px-5 py-2.5 bg-olive-900/20 border border-olive-900/40 rounded-lg text-text-secondary text-sm font-medium hover:bg-olive-900/30 transition-colors"
+                    className="px-4 sm:px-5 py-2 sm:py-2.5 bg-olive-900/20 border border-olive-900/40 rounded-lg text-text-secondary text-xs sm:text-sm font-medium hover:bg-olive-900/30 transition-colors"
                   >
                     {skill}
                   </span>
@@ -1141,33 +1144,36 @@ function generateAggregations(processedMetrics) {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 px-5 bg-bg-primary">
+      <section
+        id="contact"
+        className="py-20 sm:py-24 px-4 sm:px-5 bg-bg-primary"
+      >
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-5 gradient-text">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 gradient-text">
             Let's Connect
           </h2>
-          <p className="text-lg leading-relaxed text-text-muted mb-12 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg leading-relaxed text-text-muted mb-10 sm:mb-12 max-w-2xl mx-auto">
             I'm currently seeking full-time opportunities to build impactful
             data solutions. If you're looking for someone who can handle
             everything from pipeline engineering to strategic insights, I'd love
             to hear from you.
           </p>
 
-          <div className="flex gap-5 justify-center mb-10 flex-wrap">
+          <div className="flex gap-4 sm:gap-5 justify-center mb-8 sm:mb-10 flex-wrap">
             <a
               href="mailto:jonra.harris@gmail.com"
               onClick={trackEmailClick}
-              className="px-9 py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary no-underline rounded-xl text-base font-semibold inline-flex items-center gap-2.5 transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)]"
+              className="w-full sm:w-auto px-7 sm:px-9 py-3.5 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary no-underline rounded-xl text-sm sm:text-base font-semibold inline-flex items-center justify-center gap-2.5 transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)]"
             >
               <Mail size={20} />
               Send Email
             </a>
-            <div className="group inline-block">
+            <div className="group inline-block w-full sm:w-auto">
               <div className="relative rounded-xl p-[1px] bg-gradient-to-r from-olive-900 via-olive-300 to-olive-900 opacity-60 group-hover:opacity-100 transition-all duration-500 animate-gradient bg-[length:200%_200%] group-hover:shadow-[0_0_20px_rgba(212,222,149,0.4)]">
                 <a
                   href="/resume/Jonathon_Harris_DataEngineer.pdf"
                   download
-                  className="px-9 py-4 bg-bg-primary text-text-secondary no-underline rounded-[11px] text-base font-semibold inline-flex items-center gap-2.5 transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)]"
+                  className="px-7 sm:px-9 py-3.5 sm:py-4 bg-bg-primary text-text-secondary no-underline rounded-[11px] text-sm sm:text-base font-semibold inline-flex items-center justify-center gap-2.5 transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] w-full"
                 >
                   <Download size={20} />
                   Download Resume
@@ -1223,7 +1229,7 @@ function generateAggregations(processedMetrics) {
       </section>
 
       {/* Footer */}
-      <footer className="py-10 px-5 text-center border-t border-olive-900/20 bg-bg-primary">
+      <footer className="py-10 px-4 sm:px-5 text-center border-t border-olive-900/20 bg-bg-primary">
         <p className="text-text-muted text-sm">
           © 2025 Jonathon Harris. Built with React.
         </p>
