@@ -8,8 +8,9 @@ import ParticlesBackground from "./components/ParticlesBackground";
 import ScatterOrganizeAnimationGSAP from "./components/ScatterOrganizeAnimationGSAP";
 import ProjectModal from "./components/ProjectModal";
 import ProjectCard from "./components/ProjectCard";
-import { projects } from "./data/projects";
+import { projects } from "./data/projects"; // Correctly imported
 
+// Images from public folder
 const LogoImage = "/Olive_Logo.png";
 const ProfilePic = "/profile_pic.jpg";
 
@@ -25,6 +26,11 @@ export default function Portfolio() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  // --- State for visibility tracking ---
+  const [visibility, setVisibility] = useState({});
+  const [mostVisibleProject, setMostVisibleProject] = useState(null);
+  // --- End State ---
 
   const greetings = [
     "Hi, I'm Jon",
@@ -42,6 +48,34 @@ export default function Portfolio() {
     // Track page view
     ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   }, []);
+
+  // --- Effect for visibility tracking ---
+  useEffect(() => {
+    // Find the project with the highest intersection ratio
+    const entries = Object.entries(visibility);
+    if (entries.length === 0) {
+      setMostVisibleProject(null);
+      return;
+    }
+
+    const [mostVisibleIdx, maxRatio] = entries.reduce(
+      (acc, [idx, ratio]) => {
+        if (ratio > acc[1]) {
+          return [idx, ratio];
+        }
+        return acc;
+      },
+      [null, 0]
+    );
+
+    // Only set if the max ratio is above a minimum threshold (e.g., 20%)
+    if (maxRatio > 0.2) {
+      setMostVisibleProject(Number(mostVisibleIdx));
+    } else {
+      setMostVisibleProject(null);
+    }
+  }, [visibility]);
+  // --- End Effect ---
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1500);
@@ -65,7 +99,7 @@ export default function Portfolio() {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Adjusted detection for better mobile fit
+          // Adjusted detection (original was 150)
           return rect.top <= 100 && rect.bottom >= 100;
         }
         return false;
@@ -139,8 +173,8 @@ export default function Portfolio() {
         <div className="max-w-6xl mx-auto px-4 sm:px-5 py-3 sm:py-5 flex justify-between items-center">
           <div
             onClick={() => scrollToSection("hero")}
-            // UPDATED: w-10 sm:w-12 md:w-16 lg:w-20
-            className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-olive-900 to-olive-950 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform overflow-hidden"
+            // Mobile sizes from tweaks, desktop (md) size from your original file
+            className="w-10 h-10 sm:w-12 sm:h-12 md:w-20 md:h-20 bg-gradient-to-br from-olive-900 to-olive-950 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform overflow-hidden"
           >
             <img
               src={LogoImage}
@@ -187,14 +221,15 @@ export default function Portfolio() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="min-h-screen flex items-start md:items-center justify-center relative overflow-hidden px-4 sm:px-5 pt-32 md:pt-0 pattern-bg bg-bg-primary"
+        // Mobile pt-32 from our tweaks, md:pt-0 and md:items-center from original
+        className="min-h-screen flex items-start md:items-center justify-center relative overflow-hidden px-4 sm:px-5 pt-32 md:pt-16 pattern-bg bg-bg-primary"
       >
         <ParticlesBackground />
         <div className="max-w-4xl text-center relative z-10 animate-in fade-in duration-800">
           {/* Typing Animation */}
           <div className="mb-4 sm:mb-8">
             <h1
-              // UPDATED: text-2xl base size, min-h-[] adjusted
+              // Mobile text-4xl and min-h-[80px] from tweaks, desktop sizes match original
               className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold typing-cursor min-h-[80px] gradient-text-animated"
             >
               {typedText}
@@ -202,14 +237,14 @@ export default function Portfolio() {
           </div>
 
           <h2
-            // UPDATED: text-xl base size
+            // Mobile text-2xl from tweaks, desktop sizes match original
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-8 leading-tight text-text-muted px-4 sm:px-0"
           >
             Data Analyst & Developer
           </h2>
 
           <p
-            // UPDATED: text-sm base size
+            // Mobile text-sm from tweaks, desktop sizes match original
             className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-text-muted max-w-3xl mx-auto mb-8 sm:mb-12 font-normal px-4 sm:px-0"
           >
             I turn data into action—designing automated workflows, building
@@ -225,7 +260,7 @@ export default function Portfolio() {
             ].map((stat, idx) => (
               <div key={idx} className="text-center">
                 <div
-                  // UPDATED: text-3xl -> sm:text-4xl -> md:text-5xl
+                  // Mobile text-3xl from tweaks, desktop sizes adjusted but match original's hierarchy
                   className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-secondary mb-1"
                 >
                   <Counter target={stat.target} suffix={stat.suffix} />
@@ -242,7 +277,7 @@ export default function Portfolio() {
               href="/resume/Jonathon_Harris_DataEngineer.pdf"
               download="Jonathon_Harris_DataEngineer.pdf"
               onClick={trackResumeDownload}
-              // UPDATED: padding and text size
+              // Mobile padding/text from tweaks, desktop (sm) sizes match original
               className="inline-flex items-center gap-2 px-6 sm:px-9 py-3 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)] no-underline"
             >
               <Download size={18} />
@@ -252,7 +287,6 @@ export default function Portfolio() {
               <div className="relative rounded-xl p-[1px] bg-gradient-to-r from-olive-900 via-olive-300 to-olive-900 opacity-60 group-hover:opacity-100 transition-all duration-500 animate-gradient bg-[length:200%_200%] group-hover:shadow-[0_0_20px_rgba(212,222,149,0.4)]">
                 <button
                   onClick={() => scrollToSection("contact")}
-                  // UPDATED: padding and text size
                   className="px-6 sm:px-9 py-3 sm:py-4 bg-bg-primary text-text-secondary border-none rounded-[11px] text-sm font-semibold cursor-pointer transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] w-full"
                 >
                   Contact
@@ -264,6 +298,7 @@ export default function Portfolio() {
 
         <div
           onClick={() => scrollToSection("projects")}
+          // Centering fix from our tweaks
           className="absolute bottom-10 left-0 right-0 flex justify-center cursor-pointer opacity-60 animate-bounce-slow"
         >
           <ChevronDown size={32} className="text-text-secondary" />
@@ -285,13 +320,18 @@ export default function Portfolio() {
             Featured Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {/* --- THIS IS THE FINAL CORRECTED MAP --- */}
             {projects.map((project, idx) => (
               <ProjectCard
                 key={idx}
+                idx={idx} // Pass the index
                 project={project}
                 onOpenModal={openProjectModal}
+                setVisibility={setVisibility} // Pass the state setter
+                mostVisibleProject={mostVisibleProject} // Pass the winning project
               />
             ))}
+            {/* --- END MAP --- */}
           </div>
         </div>
       </section>

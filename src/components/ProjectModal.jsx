@@ -233,7 +233,9 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                           size={18}
                           className="text-text-secondary"
                         />
-                        <span className="text-xs text-text-secondary whitespace-nowrap">
+                        <span className="text-xs text-text-secondary w-full">
+                          {" "}
+                          {/* Removed whitespace-nowrap, added w-full */}
                           Code snippets shown with confidential data redacted.
                         </span>
                       </div>
