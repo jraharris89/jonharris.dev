@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://jonharris.dev/sitemap.xml
