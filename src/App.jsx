@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactGA from "react-ga4";
-import { Menu, X, BarChart3, Mail, Download, ChevronDown } from "lucide-react";
+import { Menu, X, Mail, ChevronDown } from "lucide-react";
+import { projects } from "./data/projects";
 import Counter from "./components/Counter";
 import { useTypewriter } from "./hooks/useTypewriter";
 import { BackgroundGradient } from "./components/BackgroundGradient";
@@ -8,7 +9,7 @@ import ParticlesBackground from "./components/ParticlesBackground";
 import ScatterOrganizeAnimationGSAP from "./components/ScatterOrganizeAnimationGSAP";
 import ProjectModal from "./components/ProjectModal";
 import ProjectCard from "./components/ProjectCard";
-import { projects } from "./data/projects"; // Correctly imported
+import BouncingDownloadIcon from "./components/BouncingDownloadIcon";
 
 // Images from public folder
 const LogoImage = "/Olive_Logo.png";
@@ -26,7 +27,6 @@ export default function Portfolio() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScrollY, setLastScrollY] = useState(0);
-
   // --- State for visibility tracking ---
   const [visibility, setVisibility] = useState({});
   const [mostVisibleProject, setMostVisibleProject] = useState(null);
@@ -256,7 +256,7 @@ export default function Portfolio() {
             {[
               { target: 3, suffix: "+", label: "Years Experience" },
               { target: 15, suffix: "+", label: "Dashboards Built" },
-              { target: 20, suffix: "+", label: "Agencies Served" },
+              { target: 20, suffix: "+", label: "Clients Served" },
             ].map((stat, idx) => (
               <div key={idx} className="text-center">
                 <div
@@ -277,10 +277,9 @@ export default function Portfolio() {
               href="/resume/Jonathon_Harris_DataEngineer.pdf"
               download="Jonathon_Harris_DataEngineer.pdf"
               onClick={trackResumeDownload}
-              // Mobile padding/text from tweaks, desktop (sm) sizes match original
-              className="inline-flex items-center gap-2 px-6 sm:px-9 py-3 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)] no-underline"
+              className="group inline-flex items-center gap-2 px-6 sm:px-9 py-3 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)] no-underline"
             >
-              <Download size={18} />
+              <BouncingDownloadIcon size={18} />
               Download Resume
             </a>
             <div className="group">
@@ -420,9 +419,9 @@ export default function Portfolio() {
             <a
               href="mailto:jonra.harris@gmail.com"
               onClick={trackEmailClick}
-              className="w-full sm:w-auto px-7 sm:px-9 py-3.5 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary no-underline rounded-xl text-sm sm:text-base font-semibold inline-flex items-center justify-center gap-2.5 transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)]"
+              className="group w-full sm:w-auto px-7 sm:px-9 py-3.5 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary no-underline rounded-xl text-sm sm:text-base font-semibold inline-flex items-center justify-center gap-2.5 transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)]"
             >
-              <Mail size={20} />
+              <Mail size={20} className="group-hover:animate-bounce" />
               Send Email
             </a>
             <div className="group inline-block w-full sm:w-auto">
@@ -430,9 +429,9 @@ export default function Portfolio() {
                 <a
                   href="/resume/Jonathon_Harris_DataEngineer.pdf"
                   download
-                  className="px-7 sm:px-9 py-3.5 sm:py-4 bg-bg-primary text-text-secondary no-underline rounded-[11px] text-sm sm:text-base font-semibold inline-flex items-center justify-center gap-2.5 transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] w-full"
+                  className="group px-7 sm:px-9 py-3.5 sm:py-4 bg-bg-primary text-text-secondary no-underline rounded-[11px] text-sm sm:text-base font-semibold inline-flex items-center justify-center gap-2.5 transition-all duration-300 hover:text-white hover:[text-shadow:0_0_8px_rgba(255,255,255,0.3)] w-full"
                 >
-                  <Download size={20} />
+                  <BouncingDownloadIcon size={20} />
                   Download Resume
                 </a>
               </div>
