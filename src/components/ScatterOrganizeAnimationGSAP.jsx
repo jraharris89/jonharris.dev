@@ -64,7 +64,7 @@ const ScatterOrganizeAnimationGSAP = () => {
 
       return {
         id: i,
-        randomX: Math.random() * 2000 - 1000, // Increased from 1200 to 2000
+        randomX: Math.random() * 2000 - 1000,
         randomY: Math.random() * 1000 - 500,
         rawX: startPos.targetX,
         rawY: startPos.targetY,
@@ -100,14 +100,19 @@ const ScatterOrganizeAnimationGSAP = () => {
 
     // Set initial textShadow state on the H2 element
     gsap.set(clearInsightsTextH2Ref.current, {
-      textShadow: "0 0 0px rgba(255, 255, 255, 0)", // Start with transparent shadow
+      textShadow: "0 0 0px rgba(255, 255, 255, 0)",
+    });
+
+    // Set initial scale for arrow
+    gsap.set(arrowRef.current, {
+      scale: 1,
     });
 
     let ctx = gsap.context(() => {
       // 1. Simple continuous floating (optimized for performance)
       const floatY = gsap.to(particleElements, {
         y: "+=20",
-        duration: 3,
+        duration: 2, // Reduced from 3 to 2
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
@@ -120,7 +125,7 @@ const ScatterOrganizeAnimationGSAP = () => {
 
       const floatX = gsap.to(particleElements, {
         x: "+=15",
-        duration: 4,
+        duration: 2.5, // Reduced from 4 to 2.5
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
@@ -133,7 +138,7 @@ const ScatterOrganizeAnimationGSAP = () => {
 
       const floatRotation = gsap.to(particleElements, {
         rotation: 5,
-        duration: 5,
+        duration: 3, // Reduced from 5 to 3
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
@@ -149,19 +154,17 @@ const ScatterOrganizeAnimationGSAP = () => {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=100%", // Match the section height (150vh)
+          end: "+=100%",
           scrub: 1,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
           onEnter: () => {
-            // Pause floating when scroll starts
             floatY.pause();
             floatX.pause();
             floatRotation.pause();
           },
           onLeaveBack: () => {
-            // Resume floating when scrolling back up
             floatY.resume();
             floatX.resume();
             floatRotation.resume();
@@ -173,7 +176,7 @@ const ScatterOrganizeAnimationGSAP = () => {
       tl.to(particleElements, {
         x: (i) => particles[i].rawX,
         y: (i) => particles[i].rawY,
-        rotation: 0, // Reset rotation when forming words
+        rotation: 0,
         opacity: 1,
         ease: "back.out(0.4)",
         duration: 4,
@@ -191,6 +194,16 @@ const ScatterOrganizeAnimationGSAP = () => {
           },
           "-=2"
         )
+        // Start pulsing animation after arrow is visible
+        .add(() => {
+          gsap.to(arrowRef.current, {
+            scale: 1.15,
+            duration: 1.2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
+        }, "-=1.5")
 
         // Phase 2: RAW DATA -> CLEAR INSIGHTS
         .to(
@@ -207,15 +220,6 @@ const ScatterOrganizeAnimationGSAP = () => {
           },
           "+=0.5"
         )
-        // Hold the particles in CLEAR INSIGHTS formation longer
-        .to(
-          particleElements,
-          {
-            opacity: 1,
-            duration: 1, // Reduced from 1.5 to 1
-          },
-          "+=0"
-        )
         // Fade out particles as text fades in
         .to(
           particleElements,
@@ -225,8 +229,7 @@ const ScatterOrganizeAnimationGSAP = () => {
           },
           "+=0"
         )
-        // Epic text reveal with glow (starts while particles are still visible)
-        // 1. Fade in text with gradually increasing white glow
+        // Epic text reveal with glow
         .to(
           clearInsightsTextRef.current,
           {
@@ -234,7 +237,7 @@ const ScatterOrganizeAnimationGSAP = () => {
             duration: 0.3,
             ease: "power2.in",
           },
-          "-=0.5"
+          "-=0.6"
         )
         .to(
           clearInsightsTextH2Ref.current,
@@ -245,12 +248,12 @@ const ScatterOrganizeAnimationGSAP = () => {
       0 0 60px rgba(255, 255, 255, 0.7),
       0 0 80px rgba(255, 255, 255, 0.5)
     `,
-            duration: 0.3, // Same duration as opacity
+            duration: 0.3,
             ease: "power2.in",
           },
-          "-=0.5" // Start at the exact same time as opacity
+          "-=0.6"
         )
-        // Hold the white flash so it's visible
+        // Hold the white flash
         .to(
           clearInsightsTextH2Ref.current,
           {
@@ -260,11 +263,11 @@ const ScatterOrganizeAnimationGSAP = () => {
       0 0 60px rgba(255, 255, 255, 0.7),
       0 0 80px rgba(255, 255, 255, 0.5)
     `,
-            duration: 0.5, // Hold the white flash
+            duration: 0.5,
           },
           "+=0"
         )
-        // 2. Transition to Green Glow
+        // Transition to Green Glow
         .to(
           clearInsightsTextH2Ref.current,
           {
@@ -296,7 +299,6 @@ const ScatterOrganizeAnimationGSAP = () => {
   return (
     <section
       ref={sectionRef}
-      // Set a specific height for the scroll track
       className="h-[100vh] relative overflow-hidden pattern-bg bg-bg-primary"
     >
       {/* Gradient overlay for seamless transition */}
@@ -328,15 +330,15 @@ const ScatterOrganizeAnimationGSAP = () => {
             ref={clearInsightsTextRef}
             className="absolute top-1/2 left-1/2 opacity-0 pointer-events-none z-20"
             style={{
-              transform: "translate(calc(-50% + 5px), 204px)", // Match targetY: 200 from generateTextParticles
+              transform: "translate(calc(-50% + 5px), 204px)",
             }}
           >
             <h2
               ref={clearInsightsTextH2Ref}
               className="font-black text-[#84963C] m-0"
               style={{
-                fontSize: "80px", // Match fontSize: 80 from generateTextParticles
-                fontFamily: "Arial", // Match font used in canvas
+                fontSize: "80px",
+                fontFamily: "Arial",
                 lineHeight: 1,
               }}
             >
@@ -344,10 +346,14 @@ const ScatterOrganizeAnimationGSAP = () => {
             </h2>
           </div>
 
-          {/* Arrow */}
+          {/* Arrow with glow effect */}
           <div
             ref={arrowRef}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-32 opacity-0 z-20"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[123px] opacity-0 z-20"
+            style={{
+              filter:
+                "drop-shadow(0 0 10px rgba(132, 150, 60, 0.8)) drop-shadow(0 0 20px rgba(132, 150, 60, 0.4))",
+            }}
           >
             <svg
               width="60"

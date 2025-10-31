@@ -13,7 +13,7 @@ import BouncingDownloadIcon from "./components/BouncingDownloadIcon";
 
 // Images from public folder
 const LogoImage = "/Olive_Logo.png";
-const ProfilePic = "/profile_pic.jpg";
+const ProfilePic = "/headshot.jpeg";
 
 // Initialize Google Analytics
 ReactGA.initialize("G-1DRREDB0CY");
@@ -247,7 +247,7 @@ export default function Portfolio() {
             // Mobile text-sm from tweaks, desktop sizes match original
             className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-text-muted max-w-3xl mx-auto mb-8 sm:mb-12 font-normal px-4 sm:px-0"
           >
-            I turn data into action—designing automated workflows, building
+            I turn data into action — designing automated workflows, building
             dashboards and websites that surface critical insights, and
             analyzing trends that help teams make smarter, faster decisions.
           </p>
@@ -359,13 +359,13 @@ export default function Portfolio() {
                 I'm a Portland-based data analyst with over 3 years of
                 experience solving complex operational challenges through data.
                 I build performance dashboards, automate workflows, and surface
-                insights that drive strategic decisions—specializing in systems
-                where timing, efficiency, and scale matter.
+                insights that drive strategic decisions — specializing in
+                systems where timing, efficiency, and scale matter.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-text-muted mb-8">
-                I work across the full data stack—engineering pipelines,
-                analyzing patterns, and designing interactive visualizations—to
-                build solutions that turn technical complexity into clear,
+                I work across the full data stack — engineering pipelines,
+                analyzing patterns, and designing interactive visualizations —
+                to build solutions that turn technical complexity into clear,
                 actionable strategy.
               </p>
               <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -417,7 +417,7 @@ export default function Portfolio() {
 
           <div className="flex gap-4 sm:gap-5 justify-center mb-8 sm:mb-10 flex-wrap">
             <a
-              href="mailto:jonra.harris@gmail.com"
+              href="mailto:contact@jonharris.dev"
               onClick={trackEmailClick}
               className="group w-full sm:w-auto px-7 sm:px-9 py-3.5 sm:py-4 bg-gradient-to-br from-olive-900 to-olive-950 text-text-secondary no-underline rounded-xl text-sm sm:text-base font-semibold inline-flex items-center justify-center gap-2.5 transition-all duration-300 shadow-lg shadow-olive-900/30 hover:-translate-y-0.5 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_10px_30px_rgba(99,107,47,0.4)]"
             >
