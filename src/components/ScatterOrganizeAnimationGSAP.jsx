@@ -10,6 +10,7 @@ const ScatterOrganizeAnimationGSAP = () => {
   const arrowRef = useRef(null);
   const clearInsightsTextRef = useRef(null);
   const clearInsightsTextH2Ref = useRef(null);
+  const bgGlowRef = useRef(null);
 
   const generateTextParticles = (text, targetY, particleSpacing = 5) => {
     const canvas = document.createElement("canvas");
@@ -107,6 +108,14 @@ const ScatterOrganizeAnimationGSAP = () => {
     gsap.set(arrowRef.current, {
       scale: 1,
     });
+
+    // Set initial state for background glow
+    if (bgGlowRef.current) {
+      gsap.set(bgGlowRef.current, {
+        opacity: 0,
+        scale: 0.8,
+      });
+    }
 
     let ctx = gsap.context(() => {
       // 1. Simple continuous floating (optimized for performance)
@@ -220,6 +229,27 @@ const ScatterOrganizeAnimationGSAP = () => {
           },
           "+=0.5"
         )
+        // Fade in background glow as particles form CLEAR INSIGHTS
+        .to(
+          bgGlowRef.current,
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 3,
+            ease: "power2.inOut",
+          },
+          "-=3.5" // Start early so it builds up as particles move
+        )
+        // Pulse the glow for extra effect
+        .to(
+          bgGlowRef.current,
+          {
+            scale: 1.1,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          "-=1"
+        )
         // Fade out particles as text fades in
         .to(
           particleElements,
@@ -325,6 +355,20 @@ const ScatterOrganizeAnimationGSAP = () => {
             ))}
           </div>
 
+          {/* Background Glow for CLEAR INSIGHTS formation */}
+          <div
+            ref={bgGlowRef}
+            className="absolute top-1/2 left-1/2 opacity-0 pointer-events-none"
+            style={{
+              transform: "translate(-50%, calc(-50% + 200px))",
+              width: "800px",
+              height: "200px",
+              background:
+                "radial-gradient(ellipse at center, rgba(132, 150, 60, 0.4) 0%, rgba(132, 150, 60, 0.2) 30%, rgba(132, 150, 60, 0.1) 50%, transparent 70%)",
+              filter: "blur(60px)",
+            }}
+          />
+
           {/* CLEAR INSIGHTS Text Layer with Epic Glow */}
           <div
             ref={clearInsightsTextRef}
@@ -349,7 +393,7 @@ const ScatterOrganizeAnimationGSAP = () => {
           {/* Arrow with glow effect */}
           <div
             ref={arrowRef}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[123px] opacity-0 z-20"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[108px] opacity-0 z-20"
             style={{
               filter:
                 "drop-shadow(0 0 10px rgba(132, 150, 60, 0.8)) drop-shadow(0 0 20px rgba(132, 150, 60, 0.4))",

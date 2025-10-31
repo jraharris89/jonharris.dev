@@ -129,18 +129,6 @@ export default function ProjectModal({ project, isOpen, onClose }) {
         <div className="relative h-48 bg-gradient-to-br from-olive-900 via-olive-800 to-olive-900 flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
 
-          {/* Back button in upper left */}
-          <button
-            onClick={onClose}
-            className="absolute top-2 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-sm rounded-lg text-white hover:bg-black/60 transition-all duration-200 z-50 shadow-lg cursor-pointer border border-white/20 group"
-          >
-            <ArrowLeft
-              size={16}
-              className="group-hover:-translate-x-1 transition-transform"
-            />
-            <span className="text-sm font-medium">Back</span>
-          </button>
-
           {/* X button in upper right - now larger and more visible */}
           <button
             onClick={onClose}
@@ -168,14 +156,6 @@ export default function ProjectModal({ project, isOpen, onClose }) {
             {project.title}
           </h2>
           <p className="text-text-muted mb-6">{project.description}</p>
-
-          {/* ESC hint */}
-          <div className="text-xs text-text-muted mb-4 flex items-center gap-2">
-            <kbd className="px-2 py-1 bg-olive-900/20 rounded border border-olive-900/30 font-mono">
-              ESC
-            </kbd>
-            <span>to close</span>
-          </div>
 
           {/* Tabs */}
           <div className="flex gap-4 mb-6 border-b border-olive-900/30">
@@ -296,7 +276,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                               "Automated_Report.gs"}
                           </span>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 ml-auto">
                           {project.codeSnippets[activeCodeSnippet].gistUrl && (
                             <a
                               href={
@@ -311,12 +291,10 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                             </a>
                           )}
                           <div className="text-olive-900 text-xs">
-                            {project.codeSnippets[activeCodeSnippet].language ||
-                              "CODE"}
+                            {project.codeSnippets[activeCodeSnippet].language}
                           </div>
                         </div>
                       </div>
-
                       {/* Code Content */}
                       <div
                         ref={scrollContainerRef}
