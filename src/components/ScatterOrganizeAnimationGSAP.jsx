@@ -374,7 +374,9 @@ const ScatterOrganizeAnimationGSAP = () => {
             ref={clearInsightsTextRef}
             className="absolute top-1/2 left-1/2 opacity-0 pointer-events-none z-20"
             style={{
-              transform: "translate(calc(-50% + 5px), 204px)",
+              // 1. Centers horizontally
+              // 2. Moves the top 200px DOWN from the center, matching the particle data
+              transform: "translate(calc(-50% + 2px), 204px)",
             }}
           >
             <h2
@@ -384,6 +386,7 @@ const ScatterOrganizeAnimationGSAP = () => {
                 fontSize: "80px",
                 fontFamily: "Arial",
                 lineHeight: 1,
+                whiteSpace: "nowrap",
               }}
             >
               CLEAR INSIGHTS

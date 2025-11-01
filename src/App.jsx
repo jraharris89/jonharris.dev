@@ -4,12 +4,15 @@ import { Menu, X, Mail, ChevronDown } from "lucide-react";
 import { projects } from "./data/projects";
 import Counter from "./components/Counter";
 import { useTypewriter } from "./hooks/useTypewriter";
-import { BackgroundGradient } from "./components/BackgroundGradient";
+// import { BackgroundGradient } from "./components/BackgroundGradient";
+import { useSafeArea } from "./hooks/useSafeArea";
+import useViewportHeight from "./hooks/useViewportHeight";
 import ParticlesBackground from "./components/ParticlesBackground";
 import ScatterOrganizeAnimationGSAP from "./components/ScatterOrganizeAnimationGSAP";
 import ProjectModal from "./components/ProjectModal";
 import ProjectCard from "./components/ProjectCard";
 import BouncingDownloadIcon from "./components/BouncingDownloadIcon";
+import ProjectsSectionWithSnap from "./components/ProjectSectionWithSnap";
 
 // Images from public folder
 const LogoImage = "/Olive_Logo.png";
@@ -31,6 +34,12 @@ export default function Portfolio() {
   const [visibility, setVisibility] = useState({});
   const [mostVisibleProject, setMostVisibleProject] = useState(null);
   // --- End State ---
+
+  // --- Custom Hooks ---
+  // Get safe area insets (for nav/footer padding)
+  const { safeAreaInsets } = useSafeArea();
+  // Set smooth viewport height (for mobile bars)
+  useViewportHeight();
 
   const greetings = [
     "Hi, I'm Jon",
@@ -161,7 +170,10 @@ export default function Portfolio() {
   }
 
   return (
-    <div className="font-sans text-gray-100 bg-bg-primary">
+    <div
+      className="font-sans text-gray-100 bg-bg-primary"
+      style={{ paddingBottom: safeAreaInsets.bottom }}
+    >
       {/* Navigation */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out md:backdrop-blur-md ${
@@ -169,8 +181,9 @@ export default function Portfolio() {
             ? "-translate-y-full"
             : "translate-y-0"
         } bg-bg-primary/95 md:bg-bg-primary/30`}
+        style={{ paddingTop: safeAreaInsets.top }}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-5 py-3 sm:py-5 flex justify-between items-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 lg:px-8 py-3 sm:py-5 flex justify-between items-center">
           <div
             onClick={() => scrollToSection("hero")}
             // Mobile sizes from tweaks, desktop (md) size from your original file
@@ -221,8 +234,7 @@ export default function Portfolio() {
       {/* Hero Section */}
       <section
         id="hero"
-        // Mobile pt-32 from our tweaks, md:pt-0 and md:items-center from original
-        className="min-h-screen flex items-start md:items-center justify-center relative overflow-hidden px-4 sm:px-5 pt-32 md:pt-16 pattern-bg bg-bg-primary"
+        className="min-h-screen-safe flex items-start md:items-center justify-center relative overflow-hidden px-4 sm:px-5 md:px-20 pt-32 md:pt-16 pattern-bg bg-bg-primary"
       >
         <ParticlesBackground />
         <div className="max-w-4xl text-center relative z-10 animate-in fade-in duration-800">
@@ -305,40 +317,30 @@ export default function Portfolio() {
       </section>
 
       {/* Transition Section - Desktop Only */}
+      {/* UPDATED: Changed lg:block back to md:block */}
       <div className="hidden md:block">
         <ScatterOrganizeAnimationGSAP />
       </div>
 
-      {/* Projects Section */}
+      {/* --- Projects Section using new component --- */}
       <section
         id="projects"
-        className="py-20 sm:py-24 px-4 sm:px-5 bg-bg-primary"
+        className="py-20 sm:py-24 px-4 sm:px-5 md:px-20 bg-bg-primary"
       >
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 sm:mb-16 text-center gradient-text">
-            Featured Projects
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {/* --- THIS IS THE FINAL CORRECTED MAP --- */}
-            {projects.map((project, idx) => (
-              <ProjectCard
-                key={idx}
-                idx={idx} // Pass the index
-                project={project}
-                onOpenModal={openProjectModal}
-                setVisibility={setVisibility} // Pass the state setter
-                mostVisibleProject={mostVisibleProject} // Pass the winning project
-              />
-            ))}
-            {/* --- END MAP --- */}
-          </div>
-        </div>
+        <ProjectsSectionWithSnap
+          projects={projects}
+          openProjectModal={openProjectModal}
+          setVisibility={setVisibility}
+          mostVisibleProject={mostVisibleProject}
+          // snapIntensity="gentle" // Re-enable this when snap CSS is active
+        />
       </section>
+      {/* --- END Projects Section --- */}
 
       {/* About Section */}
       <section
         id="about"
-        className="py-20 sm:py-24 px-4 sm:px-5 pattern-bg bg-gradient-to-b from-bg-primary to-bg-secondary"
+        className="py-20 sm:py-24 px-4 sm:px-5 md:px-20 pattern-bg bg-gradient-to-b from-bg-primary to-bg-secondary"
       >
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 gap-10 items-center">
@@ -402,7 +404,7 @@ export default function Portfolio() {
       {/* Contact Section */}
       <section
         id="contact"
-        className="py-20 sm:py-24 px-4 sm:px-5 bg-bg-primary"
+        className="py-20 sm:py-24 px-4 sm:px-5 md:px-20 bg-bg-primary"
       >
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 gradient-text">
@@ -485,7 +487,7 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="py-10 px-4 sm:px-5 text-center border-t border-olive-900/20 bg-bg-primary">
+      <footer className="py-10 px-4 sm:px-5 md:px-10 text-center border-t border-olive-900/20 bg-bg-primary">
         <p className="text-text-muted text-sm">
           © 2025 Jonathon Harris. Built with React.
         </p>

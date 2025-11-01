@@ -19,7 +19,7 @@ export const projects = [
       "Multi-modal transit data processing",
     ],
     impact:
-      "Reduced reporting time by 60% and improved decision-making speed for transit operations managers across 15+ agencies.",
+      "Reduced reporting time by 60% and improved decision-making speed for transit operations managers across 10+ agencies.",
     codeSnippets: [
       {
         title: "ETL Pipeline - Performance Analysis",
@@ -238,7 +238,7 @@ ORDER BY ta.reporting_month DESC, ta.performance_rank ASC;`,
       "Multi-agency performance tracking and benchmarking",
     ],
     impact:
-      "Reduced manual reporting time by 75%, enabling the team to process 300+ metrics weekly with zero errors and instant stakeholder notifications.",
+      "Reduced manual reporting time by 75%, enabling the team to process 200+ metrics weekly with zero errors and instant stakeholder notifications.",
     codeSnippets: [
       {
         title: "Metric Processing Engine",
@@ -247,7 +247,7 @@ ORDER BY ta.reporting_month DESC, ta.performance_rank ASC;`,
 // AGENCY METRIC TRACKER v3.2.0
 // ═══════════════════════════════════════════════════════════════
 // Automated metric processing and reporting system
-// Handles 300+ metrics across 15+ transit agencies weekly
+// Handles 200+ metrics across 10+ transit agencies weekly
 // Last Updated: 2025-08-12
 // ═══════════════════════════════════════════════════════════════
 

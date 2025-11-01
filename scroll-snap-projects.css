@@ -1,0 +1,122 @@
+/* scroll-snap-projects.css */
+
+/* Mobile-only scroll snap for projects */
+@media (max-width: 768px) {
+  /* Container setup for scroll snap */
+  .project-grid-snap {
+    /* Enable scroll snap on Y-axis */
+    scroll-snap-type: y proximity; /* Use 'proximity' for gentler snap, 'mandatory' for stronger */
+    scroll-behavior: smooth;
+
+    /* Optional: Add some scroll padding to account for fixed header */
+    scroll-padding-top: 80px; /* Adjust based on your nav height */
+
+    /* Ensure proper scrolling */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+
+  /* Individual project cards */
+  .project-card-snap {
+    scroll-snap-align: start; /* Options: start, center, end */
+    scroll-margin-top: 80px; /* Offset for fixed navigation */
+  }
+
+  /* Alternative: Center-aligned snap (often feels smoother) */
+  .project-card-snap-center {
+    scroll-snap-align: center;
+    scroll-margin: 0;
+  }
+
+  /* For very gentle snap - only activates when very close */
+  .project-grid-snap-gentle {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 80px;
+  }
+
+  /* For medium snap - balanced feel */
+  .project-grid-snap-medium {
+    scroll-snap-type: y mandatory;
+    scroll-snap-stop: normal; /* Allows scrolling through multiple items */
+    scroll-padding-top: 80px;
+  }
+
+  /* For strong snap - always snaps to nearest */
+  .project-grid-snap-strong {
+    scroll-snap-type: y mandatory;
+    scroll-snap-stop: always; /* Forces stop at each item */
+    scroll-padding-top: 80px;
+  }
+}
+
+/* Ensure the projects section itself can be the scroll container on mobile */
+@media (max-width: 768px) {
+  #projects {
+    /* Make projects section the scroll container */
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 80px;
+  }
+
+  #projects .project-card-container {
+    scroll-snap-align: start;
+    /* Ensure cards are roughly viewport height for best snap effect */
+    min-height: calc(100vh - 160px); /* Viewport minus nav and padding */
+  }
+}
+
+/* Optional: Visual indicator for scrollable area */
+@media (max-width: 768px) {
+  .scroll-indicator {
+    position: relative;
+  }
+
+  .scroll-indicator::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 4px;
+    background: rgba(132, 150, 60, 0.3);
+    border-radius: 2px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+}
+
+/* Customization variables - add to your component */
+/* 
+  Snap Intensity Levels:
+  
+  1. GENTLE (proximity):
+     - scroll-snap-type: y proximity
+     - Only snaps when scroll stops near a snap point
+     - Most natural feeling
+  
+  2. MEDIUM (mandatory with normal stop):
+     - scroll-snap-type: y mandatory
+     - scroll-snap-stop: normal
+     - Always snaps but allows momentum scrolling through items
+  
+  3. STRONG (mandatory with always stop):
+     - scroll-snap-type: y mandatory  
+     - scroll-snap-stop: always
+     - Forces stop at each item, no scrolling through
+  
+  Alignment Options:
+  - start: Aligns top of card with top of container
+  - center: Centers card in viewport (often feels best)
+  - end: Aligns bottom of card with bottom of container
+*/

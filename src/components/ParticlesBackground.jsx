@@ -24,6 +24,7 @@ const ParticlesComponent = () => {
   );
 
   // Track scroll position and update transform directly
+  /*
   useEffect(() => {
     const handleScroll = () => {
       if (particlesRef.current) {
@@ -36,6 +37,7 @@ const ParticlesComponent = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  */
 
   useEffect(() => {
     if (init) return;
@@ -141,9 +143,9 @@ const ParticlesComponent = () => {
   return (
     <div
       ref={particlesRef}
-      className="fixed inset-0 w-full h-full pointer-events-none"
+      className="absolute inset-0 w-full h-full pointer-events-none"
       style={{
-        position: "fixed",
+        position: "absolute",
         top: 0,
         left: 0,
         width: "100%",

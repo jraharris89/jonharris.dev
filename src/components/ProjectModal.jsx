@@ -143,7 +143,6 @@ export default function ProjectModal({ project, isOpen, onClose }) {
               src={project.image}
               alt={project.title}
               className="w-full h-full object-cover object-top opacity-90 z-10 relative"
-              style={{ objectPosition: "center -150px" }}
             />
           ) : (
             <div className="text-8xl z-10 relative">{project.emoji}</div>
@@ -317,20 +316,17 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                             </div>
                           </div>
                         ) : (
-                          <div className="p-4 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-olive-900 scrollbar-track-bg-dark hover:scrollbar-thumb-olive-800 focus-within:scrollbar-thumb-olive-800">
-                            <CodeBlock
-                              code={
-                                gistContent[
-                                  project.codeSnippets[activeCodeSnippet].title
-                                ] ||
-                                project.codeSnippets[activeCodeSnippet].code
-                              }
-                              language={
-                                project.codeSnippets[activeCodeSnippet]
-                                  .language || "sql"
-                              }
-                            />
-                          </div>
+                          <CodeBlock
+                            code={
+                              gistContent[
+                                project.codeSnippets[activeCodeSnippet].title
+                              ] || project.codeSnippets[activeCodeSnippet].code
+                            }
+                            language={
+                              project.codeSnippets[activeCodeSnippet]
+                                .language || "sql"
+                            }
+                          />
                         )}
                       </div>
                     </div>
