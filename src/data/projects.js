@@ -485,7 +485,7 @@ function generateAggregations(processedMetrics) {
     ],
   },
   {
-    title: "Peer Analysis Project",
+    title: "Peer Analysis Report",
     description:
       "Automated quarterly reporting system that fetches performance data from internal APIs, calculates peer group rankings and trends, then generates and emails interactive HTML reports to stakeholders. Eliminated 20+ hours of manual work per quarter.",
     tech: [
@@ -500,7 +500,7 @@ function generateAggregations(processedMetrics) {
     features: [
       "Fetches and parses JSON data from an internal performance API.",
       "Processes raw data to calculate peer group averages, agency rankings, and historical trends.",
-      "Dynamically generates a rich, single-page HTML report from a template.",
+      "Dynamically generates a rich HTML report from a template.",
       "Embeds CSS within the HTML for a polished, professional, and interactive report layout.",
       "Automatically emails the final HTML report to a stakeholder distribution list.",
       "Runs on an automated, time-based trigger to ensure timely delivery every quarter.",
@@ -516,5 +516,6 @@ function generateAggregations(processedMetrics) {
         code: "// Loading code from GitHub Gist...",
       },
     ],
+    liveUrl: "/Benchmark_Quarterly_Report.html",
   },
 ];
