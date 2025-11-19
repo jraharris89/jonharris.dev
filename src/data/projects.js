@@ -224,30 +224,40 @@ ORDER BY ta.reporting_month DESC, ta.performance_rank ASC;`,
       "https://public.tableau.com/views/TransDASH_Agency_LTD_REDESIGN/Overview?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link",
   },
   {
-    title: "Agency Metric Tracker",
+    title: "Transit Analytics Automation Suite",
     description:
-      "Automated reporting system built with Google Apps Script that syncs CSV data, processes metrics, and generates weekly performance reports. Reduced manual reporting time by 75%.",
-    tech: ["Google Apps Script", "JavaScript", "CSV Processing", "Automation"],
+      "Comprehensive automated reporting system built with Google Apps Script that processes 200+ metrics quarterly, generates quarterly peer analysis reports, and delivers interactive insights to stakeholders. Combines real-time metric tracking with strategic benchmarking to eliminate 95+ hours of manual work annually.",
+    tech: [
+      "Google Apps Script",
+      "JavaScript",
+      "HTML5",
+      "CSS3",
+      "API Integration",
+      "CSV Processing",
+      "Automation",
+    ],
     image: AgencyTrackerImage,
     features: [
-      "Automated CSV data ingestion from Google Drive",
-      "Real-time data validation and quality checks",
-      "Complex metric calculations and aggregations",
-      "Automated weekly report generation and distribution",
-      "Custom alert system for anomaly detection",
-      "Multi-agency performance tracking and benchmarking",
+      "Automated CSV data ingestion and API integration from multiple sources",
+      "Real-time data validation with intelligent quality checks and outlier detection",
+      "Complex metric calculations, aggregations, and derived KPI processing",
+      "Weekly automated report generation with custom alert system for anomalies",
+      "Quarterly peer analysis reports with rankings, trends, and comparative insights",
+      "Dynamic HTML report generation with embedded styling and interactive elements",
+      "Automated email distribution to stakeholder groups with time-based triggers",
+      "Multi-agency performance tracking and peer group benchmarking",
     ],
     impact:
-      "Reduced manual reporting time by 75%, enabling the team to process 200+ metrics weekly with zero errors and instant stakeholder notifications.",
+      "Eliminated 95+ hours of manual work annually (75% reduction in weekly reporting + 20 hours per quarter). Processes 200+ metrics quarterly with zero errors, provides instant stakeholder notifications, and delivers interactive quarterly reports that enable faster, data-driven strategic decision-making across 10+ transit agencies.",
     codeSnippets: [
       {
         title: "Metric Processing Engine",
         filename: "metric_processor.gs",
         code: `// ═══════════════════════════════════════════════════════════════
-// AGENCY METRIC TRACKER v3.2.0
+// TRANSIT ANALYTICS AUTOMATION SUITE v3.2.0
 // ═══════════════════════════════════════════════════════════════
 // Automated metric processing and reporting system
-// Handles 200+ metrics across 10+ transit agencies weekly
+// Handles 200+ metrics across 10+ transit agencies quarterly 
 // Last Updated: 2025-08-12
 // ═══════════════════════════════════════════════════════════════
 
@@ -482,34 +492,8 @@ function generateAggregations(processedMetrics) {
   return aggregations;
 }`,
       },
-    ],
-  },
-  {
-    title: "Peer Analysis Report",
-    description:
-      "Automated quarterly reporting system that fetches performance data from internal APIs, calculates peer group rankings and trends, then generates and emails interactive HTML reports to stakeholders. Eliminated 20+ hours of manual work per quarter.",
-    tech: [
-      "Google Apps Script",
-      "JavaScript",
-      "HTML5",
-      "CSS3",
-      "API",
-      "Automation",
-    ],
-    image: BenchmarkReportImage,
-    features: [
-      "Fetches and parses JSON data from an internal performance API.",
-      "Processes raw data to calculate peer group averages, agency rankings, and historical trends.",
-      "Dynamically generates a rich HTML report from a template.",
-      "Embeds CSS within the HTML for a polished, professional, and interactive report layout.",
-      "Automatically emails the final HTML report to a stakeholder distribution list.",
-      "Runs on an automated, time-based trigger to ensure timely delivery every quarter.",
-    ],
-    impact:
-      "Eliminated 20+ hours of manual data collection and report-building each quarter. The automated system provides timely, interactive data to leadership, enabling faster and more consistent strategic decision-making.",
-    codeSnippets: [
       {
-        title: "Automated Report Generator",
+        title: "Quarterly Peer Analysis Report Generator",
         language: "javascript",
         gistUrl:
           "https://gist.github.com/jraharris89/f2f5c9746ea55fcc07c3669a4c514da8",
