@@ -35,7 +35,7 @@ export const projects = [
   {
     title: "Transit Analytics Automation Suite",
     description:
-      "Automated reporting system processing 200+ transit metrics weekly with Google Apps Script. Generates quarterly peer analysis reports, delivers interactive insights to stakeholders, and eliminates 95+ hours of manual work annually.",
+      "Automated reporting system processing 200+ transit metrics quarterly with Google Apps Script. Generates quarterly peer analysis reports, delivers interactive insights to stakeholders, and eliminates 95+ hours of manual work annually.",
     tech: [
       "Google Apps Script",
       "JavaScript",
@@ -48,7 +48,7 @@ export const projects = [
       "Automated CSV data ingestion and API integration from multiple sources",
       "Real-time data validation with intelligent quality checks and outlier detection",
       "Complex metric calculations, aggregations, and derived KPI processing",
-      "Weekly automated report generation with custom alert system for anomalies",
+      "Quarterly automated report generation with custom alert system for anomalies",
       "Quarterly peer analysis reports with rankings, trends, and comparative insights",
       "Dynamic HTML report generation with embedded styling and interactive elements",
       "Automated email distribution to stakeholder groups with time-based triggers",
