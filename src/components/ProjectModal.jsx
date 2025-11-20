@@ -142,7 +142,11 @@ export default function ProjectModal({ project, isOpen, onClose }) {
             <img
               src={project.image}
               alt={project.title}
-              className="w-full h-full object-cover object-top opacity-90 z-10 relative"
+              className={`w-full h-full object-cover ${
+                project.title.includes("E-Commerce")
+                  ? "object-center"
+                  : "object-top"
+              } opacity-90 z-10 relative`}
             />
           ) : (
             <div className="text-8xl z-10 relative">{project.emoji}</div>
@@ -248,17 +252,19 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                         ))}
                       </div>
 
-                      <div className="flex items-center gap-2 text-olive-900 group relative">
-                        <AlertTriangle
-                          size={18}
-                          className="text-text-secondary"
-                        />
-                        <span className="text-xs text-text-secondary w-full">
-                          {" "}
-                          {/* Removed whitespace-nowrap, added w-full */}
-                          Code snippets shown with confidential data redacted.
-                        </span>
-                      </div>
+                      {!project.title.includes("E-Commerce") && (
+                        <div className="flex items-center gap-2 text-olive-900 group relative">
+                          <AlertTriangle
+                            size={18}
+                            className="text-text-secondary"
+                          />
+                          <span className="text-xs text-text-secondary w-full">
+                            {" "}
+                            {/* Removed whitespace-nowrap, added w-full */}
+                            Code snippets shown with confidential data redacted.
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     <div className="bg-bg-dark rounded-lg border border-olive-900/30 overflow-hidden">

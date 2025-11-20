@@ -383,11 +383,12 @@ export default function Portfolio() {
                 </div>
               </div>
               <p className="text-base sm:text-lg leading-relaxed text-text-muted mb-5">
-                I'm a Portland-based data analyst with over 3 years of
-                experience solving complex operational challenges through data.
-                I build performance dashboards, automate workflows, and surface
-                insights that drive strategic decisions — specializing in
-                systems where timing, efficiency, and scale matter.
+                I'm a Portland-based data analyst and Computer Science graduate
+                with over 3 years of experience solving complex operational
+                challenges through data. I build performance dashboards,
+                automate workflows, and surface insights that drive strategic
+                decisions — specializing in systems where timing, efficiency,
+                and scale matter.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-text-muted mb-8">
                 I work across the full data stack — engineering pipelines,
@@ -407,7 +408,7 @@ export default function Portfolio() {
                   "Automation",
                   "Data Modeling",
                   "Statistical Analysis",
-                  "AWS",
+                  "Kafka",
                   "Snowflake",
                   "APIs",
                   "React",
