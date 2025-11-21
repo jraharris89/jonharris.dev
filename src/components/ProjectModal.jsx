@@ -289,7 +289,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                               }
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-1 px-2 py-1 bg-olive-900/20 hover:bg-olive-900/30 text-text-secondary text-xs rounded transition-colors"
+                              className="hidden sm:flex items-center gap-1 px-2 py-1 bg-olive-900/20 hover:bg-olive-900/30 text-text-secondary text-xs rounded transition-colors"
                             >
                               <Github size={12} />
                               View Gist

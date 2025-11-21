@@ -229,7 +229,7 @@ export default function Portfolio() {
           <ul
             className={`${
               isMenuOpen ? "flex" : "hidden"
-            } md:flex flex-col md:flex-row absolute md:relative top-[56px] sm:top-[64px] md:top-0 left-0 right-0 md:left-auto md:right-auto bg-bg-primary/80 backdrop-blur-lg md:bg-transparent gap-4 sm:gap-5 md:gap-10 list-none items-center p-4 sm:p-5 md:p-0 shadow-lg md:shadow-none border-t border-olive-900/20 md:border-0`}
+            } md:flex flex-col md:flex-row absolute md:relative top-[56px] sm:top-[64px] md:top-0 left-0 right-0 md:left-auto md:right-auto bg-transparent gap-4 sm:gap-5 md:gap-10 list-none items-center p-4 sm:p-5 md:p-0 shadow-lg md:shadow-none border-t border-olive-900/20 md:border-0`}
           >
             {["hero", "projects", "about", "contact"].map((section) => (
               <li key={section}>
